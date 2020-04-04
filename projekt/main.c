@@ -1,10 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int x_max = 80;
 int y_max = 40;
 int final_scale = 100;
+
 char* grass_array = NULL;
 int* water_array = NULL;
+
+char* grass_file_name = "in.txt";
 
 short* final_small_array = NULL;
 short* final_array = NULL;
@@ -39,4 +43,13 @@ void grass_load(FILE* fp)
          y++;
       }
    }
+}
+int main(void)
+{
+   FILE* grass_file = fopen(grass_file_name, "r");
+
+   grass_load(grass_file);
+
+   return 0;
+
 }
