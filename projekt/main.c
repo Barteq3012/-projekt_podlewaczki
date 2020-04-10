@@ -1,12 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct water {
+    int count;
+    int rotation;
+    int type;
+} water_type;
+
 int x_max = 80;
 int y_max = 40;
 int final_scale = 100;
 
 char* grass_array = NULL;
-int* water_array = NULL;
+water_type* water_array = NULL;
 
 char* grass_file_name = "in.txt";
 
