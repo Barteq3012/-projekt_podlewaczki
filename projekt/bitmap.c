@@ -11,19 +11,36 @@
 #include <string.h>
 #include <time.h>
 
-void save(char* file_name)
+int x_max = 80;
+int y_max = 40;
+int final_scale = 100;
+
+void draw_circle(int xc, int yc, int* final_array)
 {
-	int x_max = 80;
-	int y_max = 40;
-	int final_scale = 10;
+
+	int radius = final_scale * 10;
+	for (int y = 0; y < y_max * final_scale; y++)
+	{
+		for (int x = 0; x < x_max * final_scale; x++)
+		{
+			if(pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2))
+				final_array[y * x_max * final_scale + x] = 5;
+
+		}
+	}
+
+}
+
+void save(char* file_name, int* final_array)
+{
+
 	int y, x;
 	int width = x_max * final_scale;
 	int height = y_max * final_scale;
 	int size = width * height * 4; //for 32-bit bitmap only
-	short* final_array = NULL;
-	final_array = calloc(x_max * final_scale * y_max * final_scale, sizeof(short));
 
-	for (int y = 0; y < y_max * final_scale; y++)
+
+	/*for (int y = 0; y < y_max * final_scale; y++)
 	{
 		for (int x = 0; x < x_max * final_scale; x++)
 		{
@@ -42,6 +59,9 @@ void save(char* file_name)
 
 		}
 	}
+
+	*/
+
 
 
 
@@ -95,8 +115,13 @@ void save(char* file_name)
 int main(void)
 {
 	double start = time(NULL);
-	
-	save("output.bmp");
+
+	int* final_array = NULL;
+	final_array = calloc(x_max * final_scale * y_max * final_scale, sizeof(int));
+
+
+	draw_circle(x_max * final_scale / 2, y_max * final_scale / 2, final_array);
+	save("output.bmp", final_array);
 
 	printf("Czas wykonywania: %g sekund\n", time(NULL) - start);
 	return 0;
