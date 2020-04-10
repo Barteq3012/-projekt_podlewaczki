@@ -13,7 +13,7 @@
 
 int x_max = 80;
 int y_max = 40;
-int final_scale = 100;
+int final_scale = 10;
 
 void draw_circle(int xc, int yc, int* final_array)
 {
@@ -30,6 +30,57 @@ void draw_circle(int xc, int yc, int* final_array)
 	}
 
 }
+
+void draw_half_of_circle(int xc, int yc, int* final_array)
+{
+
+	int radius = final_scale * 5;
+	for (int y = 0; y < y_max * final_scale; y++)
+	{
+		for (int x = 0; x < x_max * final_scale; x++)
+		{
+			if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && y < yc )
+				final_array[y * x_max * final_scale + x] = 18;
+
+		}
+	}
+
+}
+void draw_quarter_of_circle(int xc, int yc, int* final_array)
+{
+
+	int radius = final_scale * 10;
+	for (int y = 0; y < y_max * final_scale; y++)
+	{
+		for (int x = 0; x < x_max * final_scale; x++)
+		{
+			if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && y < yc && x < xc)
+				final_array[y * x_max * final_scale + x] = 25;
+
+		}
+	}
+
+}
+void draw_circle_without_qurter(int xc, int yc, int* final_array)
+{
+
+	int radius = final_scale * 5;
+	for (int y = 0; y < y_max * final_scale; y++)
+	{
+		for (int x = 0; x < x_max * final_scale; x++)
+		{
+			if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && (x < xc || y < yc))
+				final_array[y * x_max * final_scale + x] = 8;
+
+		}
+	}
+
+}
+
+
+
+
+
 
 void save(char* file_name, int* final_array)
 {
@@ -121,6 +172,9 @@ int main(void)
 
 
 	draw_circle(x_max * final_scale / 2, y_max * final_scale / 2, final_array);
+	draw_half_of_circle(x_max * final_scale / 4, y_max * final_scale / 4, final_array);
+	draw_quarter_of_circle(x_max * final_scale, y_max * final_scale, final_array);
+	draw_circle_without_qurter(x_max * final_scale / 1.3, y_max * final_scale / 1.3, final_array);
 	save("output.bmp", final_array);
 
 	printf("Czas wykonywania: %g sekund\n", time(NULL) - start);
