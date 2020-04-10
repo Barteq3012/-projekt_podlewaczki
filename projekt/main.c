@@ -2,9 +2,9 @@
 #include <stdlib.h>
 
 struct water {
-    int count;
-    int rotation;
-    int type;
+    int count; // ilosc podlewaczek w jednym miejscu
+    int rotation; // obrot poszczegolnej podlewczki
+    int type; // typ podlewaczki 0-3
 } water_type;
 
 int x_max = 80;
