@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 struct water {
-    int count; // ilosc podlewaczek w jednym miejscu
     int rotation; // obrot poszczegolnej podlewczki
     int type; // typ podlewaczki 0-3
 } water_type;
@@ -16,16 +15,16 @@ water_type* water_array = NULL;
 
 char* grass_file_name = "in.txt";
 
-short* final_small_array = NULL;
-short* final_array = NULL;
+int* final_small_array = NULL;
+int* final_array = NULL;
 
 void grass_load(FILE* fp)
 {
    grass_array = calloc(x_max * y_max, sizeof(char));
    water_array = calloc(x_max * y_max, sizeof(int));
 
-   final_small_array = calloc(x_max * y_max, sizeof(short));
-   final_array = calloc(x_max * final_scale * y_max * final_scale, sizeof(short));
+   final_small_array = calloc(x_max * y_max, sizeof(int));
+   final_array = calloc(x_max * final_scale * y_max * final_scale, sizeof(int));
 
    int x = 0;
    int y = 0;
