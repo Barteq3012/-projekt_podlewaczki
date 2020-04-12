@@ -13,7 +13,7 @@ typedef struct water {
 
 int x_max = 80;
 int y_max = 40;
-int final_scale = 20;
+int final_scale = 30;
 
 int type_360_range = 2;
 int type_270_range = 3;
@@ -229,7 +229,7 @@ void trial_version()
 				(y_rel >= y_max || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, (y + 1) * final_scale - 1, 90, 1); //tez
+				set_water(x * final_scale, (y + 1)* final_scale - 1, 90, 1);
 			}
 
 			y_rel -= 2;
@@ -247,7 +247,7 @@ void trial_version()
 				(y_rel < 0 || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1) * final_scale - 1, y * final_scale, 90, 3); //oszukanie tez
+				set_water((x + 1) * final_scale - 1, y * final_scale, 90, 3); 
 			}
 
 			y_rel += 2;
@@ -256,7 +256,7 @@ void trial_version()
 				(y_rel >= y_max || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1)* final_scale - 1, (y + 1) * final_scale - 1, 90, 4); // oszukanie
+				set_water((x + 1)* final_scale - 1, (y + 1) * final_scale - 1, 90, 4);
 			}
 
 			//setting positions of 180 type
@@ -265,7 +265,7 @@ void trial_version()
 			y_rel = y;
 
 			if ((x_rel < 0 || grass_array[y_rel * x_max + x_rel] == '-') &&
-				y_rel >= 0 + 1 &&
+				y_rel >= 0 + 1 && 
 				y_rel < y_max - 1 && 
 				grass_array[(y_rel - 1) * x_max + x] == '*' &&
 				grass_array[(y_rel + 1) * x_max + x] == '*' &&
@@ -297,7 +297,7 @@ void trial_version()
 				grass_array[(y_rel + 1) * x_max + x] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1)* final_scale - 1, y * final_scale, 180, 3);// tu tez
+				set_water((x + 1)* final_scale - 1, y * final_scale, 180, 3);
 			}
 
 			x_rel = x;
@@ -310,7 +310,7 @@ void trial_version()
 				grass_array[y * x_max + (x_rel + 1)] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, (y + 1)* final_scale -1, 180, 4);// i tu
+				set_water(x * final_scale, (y + 1)* final_scale -1, 180, 4);
 			}
 
 
@@ -326,7 +326,7 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x* final_scale, y* final_scale, 270, 1);
+				set_water((x + 1) * final_scale - 1, y* final_scale, 270, 1);
 			}
 
 			y_rel = y + 1;
@@ -338,7 +338,7 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 270, 2);
+				set_water((x + 1)* final_scale - 1, (y + 1)* final_scale - 1, 270, 2);
 			}
 
 			x_rel = x - 1;
@@ -350,7 +350,7 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 270, 3);
+				set_water(x * final_scale, (y + 1) * final_scale - 1, 270, 3);
 			}
 
 			y_rel = y - 1;
