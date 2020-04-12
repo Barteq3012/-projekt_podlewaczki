@@ -229,7 +229,7 @@ void trial_version()
 				(y_rel >= y_max || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 90, 1);
+				set_water(x * final_scale, (y + 1) * final_scale - 1, 90, 1); //tez
 			}
 
 			y_rel -= 2;
