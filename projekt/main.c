@@ -245,9 +245,9 @@ double minimum=0.4;
 double relation=0.0;
 int condition=0;
 
-for(int x=5; x<x_max; x+=3){                            
+for(int x=0; x<x_max; x+=3){                            
                                                        
-        for(int y=5; y<y_max; y+=3){
+        for(int y=0; y<y_max; y+=3){
 		if(grass_array[y*x_max+x]=='*' && water_array[y*x_max+x].type==0 && water_array[y*x_max+x].rotation==0){
               		 condition=circle_condition(x,y);
 				 if(condition==0)
