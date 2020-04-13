@@ -241,13 +241,11 @@ return condition;
 void circle_version()
 {
 
-double minimum=0.4;  
-double relation=0.0;
 int condition=0;
 
-for(int x=0; x<x_max; x+=3){                            
+for(int x=0; x<x_max; x+=type_360_range+1){                            
                                                        
-        for(int y=0; y<y_max; y+=3){
+        for(int y=0; y<y_max; y+=type_360_range+1){
 		if(grass_array[y*x_max+x]=='*' && water_array[y*x_max+x].type==0 && water_array[y*x_max+x].rotation==0){
               		 condition=circle_condition(x,y);
 				 if(condition==0)
@@ -472,7 +470,6 @@ int main(int argc, char** argv)
 	read_data_from_water_array();
 	circle_version();
 	read_data_from_water_array_circle();
-	watering_point(100,100,360,1);
 	save("output.bmp");
 
 
