@@ -29,7 +29,7 @@ char* grass_array = NULL;
 water_type* water_array = NULL;
 int* final_array = NULL;
 
-char* grass_file_name = "in.txt";
+//char* grass_file_name = "in.txt";
 
 
 void set_water(int x, int y, int type, int rotation)
@@ -215,6 +215,29 @@ void save(char* file_name)
 	fclose(fout);
 }
 
+void circle_version()
+{
+
+double minimum=0.4;  
+double relation=0.0;
+int w=0;
+
+for(int x=5; x<x_max; x+=3){                            
+                                                       
+        for(int y=5; y<y_max; y+=3){
+		if(grass_array[y*x_max+x]=='*' && water_array[y*x_max+x].type==0 && water_array[y*x_max+x].rotation==0 && grass_array[y * x_max + x+2] != '-'&&
+			      	grass_array[y * x_max + x-2] != '-'&& grass_array[(y-2) * x_max + x] != '-' &&  grass_array[(y+2) * x_max + x] != '-'){
+              
+
+					set_water(x*final_scale, y*final_scale, 360, 1);
+                               
+                        }}
+
+
+}
+}
+
+
 void trial_version()
 {
 	for (int y = 0; y < y_max; y++)
@@ -393,15 +416,16 @@ void read_data_from_water_array()
 }
 
 
-int main(void)
+int main(int argc, char** argv)
 {
 	double start = time(NULL);
 
-	FILE* grass_file = fopen(grass_file_name, "r");
+	FILE* grass_file= argc> 1 ? fopen (argv[1], "r"):stdin;
 	grass_load(grass_file);
 	trial_version();
+	circle_version();
 	read_data_from_water_array();
-
+	watering_point(100,100,360,1);
 	save("output.bmp");
 
 
