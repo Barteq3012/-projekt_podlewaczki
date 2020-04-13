@@ -217,19 +217,40 @@ void save(char* file_name)
 	fclose(fout);
 }
 
+
+
+
+int circle_condition(int circle_x, int circle_y){
+int rad= type_360_range;
+int condition=0;
+for (int y = 0; y < y_max; y++)
+        {
+                for (int x = 0; x < x_max; x++)
+                {
+                        
+                                if (pow(circle_x - x, 2) + pow(circle_y - y, 2) <= pow(rad, 2)){
+					if(grass_array[y * x_max + x] == '-')
+						condition++;
+						}
+							
+						}
+	}
+return condition;
+}
+
 void circle_version()
 {
 
 double minimum=0.4;  
 double relation=0.0;
-int w=0;
+int condition=0;
 
 for(int x=5; x<x_max; x+=3){                            
                                                        
         for(int y=5; y<y_max; y+=3){
-		if(grass_array[y*x_max+x]=='*' && water_array[y*x_max+x].type==0 && water_array[y*x_max+x].rotation==0 && grass_array[y * x_max + x+2] != '-'&&
-			      	grass_array[y * x_max + x-2] != '-'&& grass_array[(y-2) * x_max + x] != '-' &&  grass_array[(y+2) * x_max + x] != '-'){
-              
+		if(grass_array[y*x_max+x]=='*' && water_array[y*x_max+x].type==0 && water_array[y*x_max+x].rotation==0){
+              		 condition=circle_condition(x,y);
+				 if(condition==0)
 
 					set_water(x*final_scale, y*final_scale, 360, 1, 2);
                                
