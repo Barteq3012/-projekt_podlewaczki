@@ -8,7 +8,8 @@
 
 typedef struct water {
     int rotation; // obrot poszczegolnej podlewczki
-    int type; // typ podlewaczki 
+    int type; // typ podlewaczki
+    int use; //zeby dana podlewaczka dziala tylko raz 
 } water_type;
 
 int x_max = 80;
@@ -32,10 +33,11 @@ int* final_array = NULL;
 //char* grass_file_name = "in.txt";
 
 
-void set_water(int x, int y, int type, int rotation)
+void set_water(int x, int y, int type, int rotation, int use)
 {
 	water_array[y * x_max * final_scale + x].type = type;
 	water_array[y * x_max * final_scale + x].rotation = rotation;
+	water_array[y*x_max*final_scale+x].use+=use;
 
 }
 
@@ -229,7 +231,7 @@ for(int x=5; x<x_max; x+=3){
 			      	grass_array[y * x_max + x-2] != '-'&& grass_array[(y-2) * x_max + x] != '-' &&  grass_array[(y+2) * x_max + x] != '-'){
               
 
-					set_water(x*final_scale, y*final_scale, 360, 1);
+					set_water(x*final_scale, y*final_scale, 360, 1, 2);
                                
                         }}
 
@@ -252,7 +254,7 @@ void trial_version()
 				(y_rel >= y_max || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, (y + 1)* final_scale - 1, 90, 1);
+				set_water(x * final_scale, (y + 1)* final_scale - 1, 90, 1, 1);
 			}
 
 			y_rel -= 2;
@@ -261,7 +263,7 @@ void trial_version()
 				(y_rel < 0 || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 90, 2);
+				set_water(x * final_scale, y * final_scale, 90, 2, 1);
 			}
 
 			x_rel += 2;
@@ -270,7 +272,7 @@ void trial_version()
 				(y_rel < 0 || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1) * final_scale - 1, y * final_scale, 90, 3); 
+				set_water((x + 1) * final_scale - 1, y * final_scale, 90, 3, 1); 
 			}
 
 			y_rel += 2;
@@ -279,7 +281,7 @@ void trial_version()
 				(y_rel >= y_max || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1)* final_scale - 1, (y + 1) * final_scale - 1, 90, 4);
+				set_water((x + 1)* final_scale - 1, (y + 1) * final_scale - 1, 90, 4, 1);
 			}
 
 			//setting positions of 180 type
@@ -294,7 +296,7 @@ void trial_version()
 				grass_array[(y_rel + 1) * x_max + x] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 180, 1);
+				set_water(x * final_scale, y * final_scale, 180, 1, 1);
 			}
 
 			x_rel = x;
@@ -307,7 +309,7 @@ void trial_version()
 				grass_array[y * x_max + (x_rel + 1)] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 180, 2);
+				set_water(x * final_scale, y * final_scale, 180, 2, 1);
 			}
 
 			x_rel = x + 1;
@@ -320,7 +322,7 @@ void trial_version()
 				grass_array[(y_rel + 1) * x_max + x] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1)* final_scale - 1, y * final_scale, 180, 3);
+				set_water((x + 1)* final_scale - 1, y * final_scale, 180, 3, 1);
 			}
 
 			x_rel = x;
@@ -333,7 +335,7 @@ void trial_version()
 				grass_array[y * x_max + (x_rel + 1)] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, (y + 1)* final_scale -1, 180, 4);
+				set_water(x * final_scale, (y + 1)* final_scale -1, 180, 4, 1);
 			}
 
 
@@ -349,7 +351,7 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1) * final_scale - 1, y* final_scale, 270, 1);
+				set_water((x + 1) * final_scale - 1, y* final_scale, 270, 1, 1);
 			}
 
 			y_rel = y + 1;
@@ -361,7 +363,7 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1)* final_scale - 1, (y + 1)* final_scale - 1, 270, 2);
+				set_water((x + 1)* final_scale - 1, (y + 1)* final_scale - 1, 270, 2, 1);
 			}
 
 			x_rel = x - 1;
@@ -373,7 +375,7 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, (y + 1) * final_scale - 1, 270, 3);
+				set_water(x * final_scale, (y + 1) * final_scale - 1, 270, 3, 1);
 			}
 
 			y_rel = y - 1;
@@ -385,7 +387,7 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 270, 4);
+				set_water(x * final_scale, y * final_scale, 270, 4, 1);
 			}
 
 
@@ -403,7 +405,7 @@ void read_data_from_water_array()
 		for (int x = 0; x < x_max * final_scale; x++)
 		{
 			if (water_array[y * x_max * final_scale + x].type != 0 &&
-				water_array[y * x_max * final_scale + x].rotation != 0)
+				water_array[y * x_max * final_scale + x].rotation != 0 && water_array[y*x_max*final_scale+x].use==1)
 			{
 				type = water_array[y * x_max * final_scale + x].type;
 				rotation = water_array[y * x_max * final_scale + x].rotation;
@@ -415,6 +417,29 @@ void read_data_from_water_array()
 
 }
 
+void read_data_from_water_array_circle()
+{
+        int type;
+        int rotation;
+        int use;
+
+        for (int y = 0; y < y_max * final_scale; y++)
+        {
+                for (int x = 0; x < x_max * final_scale; x++)
+                {
+                        if (water_array[y * x_max * final_scale + x].type != 0 &&
+                                water_array[y * x_max * final_scale + x].rotation != 0 && water_array[y*x_max*final_scale+x].use==2)
+                        {
+                                type = water_array[y * x_max * final_scale + x].type;
+                                rotation = water_array[y * x_max * final_scale + x].rotation;
+                                watering_point(x, y, type, rotation);
+                        }
+
+                }
+        }
+
+}
+
 
 int main(int argc, char** argv)
 {
@@ -423,8 +448,9 @@ int main(int argc, char** argv)
 	FILE* grass_file= argc> 1 ? fopen (argv[1], "r"):stdin;
 	grass_load(grass_file);
 	trial_version();
-	circle_version();
 	read_data_from_water_array();
+	circle_version();
+	read_data_from_water_array_circle();
 	watering_point(100,100,360,1);
 	save("output.bmp");
 
