@@ -75,7 +75,8 @@ void water_point_file (char* file_name){
         {
                 for (int x = 0; x < x_max * final_scale; x++)
                 {       if(water_array[y * x_max * final_scale + x].type != 0)
-                        fprintf(out, "wspolrzedne (%d, %d) typ podlewaczki: %d\n", y, x, water_array[y * x_max * final_scale + x].type);
+                        fprintf(out, "wspolrzedne (%d, %d) typ podlewaczki: %d sposob rotacji: %d \n", y, x, water_array[y * x_max * final_scale + x].type,
+			 water_array[y * x_max * final_scale + x].rotation);
 
 		}
 
