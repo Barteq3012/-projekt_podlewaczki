@@ -6,20 +6,22 @@
 #include <string.h>
 #include <time.h>
 
-typedef struct water {
-    int rotation; // obrot poszczegolnej podlewczki
-    int type; // typ podlewaczki
-    int use; //zeby dana podlewaczka dziala tylko raz 
+typedef struct water
+{
+	int rotation; // obrot poszczegolnej podlewczki
+	int type; // typ podlewaczki
+	int use; //zeby dana podlewaczka dziala tylko raz 
 } water_type;
 
 int x_max = 80;
 int y_max = 40;
-int final_scale = 10;
+int final_scale = 50;
 
 int type_360_range = 2;
 int type_270_range = 3;
 int type_180_range = 2;
 int type_90_range = 4;
+int type_max_range = 4;
 
 int type_360_cycles = 1;
 int type_270_cycles = 2;
@@ -32,80 +34,185 @@ int* final_array = NULL;
 
 //char* grass_file_name = "in.txt";
 
-
 void set_water(int x, int y, int type, int rotation, int use)
 {
 	water_array[y * x_max * final_scale + x].type = type;
 	water_array[y * x_max * final_scale + x].rotation = rotation;
-	water_array[y*x_max*final_scale+x].use+=use;
-
+	water_array[y * x_max * final_scale + x].use += use;
 }
 
 void grass_load(FILE* fp)
 {
-   grass_array = calloc(x_max * y_max, sizeof(char));
-   water_array = calloc(x_max * final_scale * y_max * final_scale, sizeof(water_type));
-   final_array = calloc(x_max * final_scale * y_max * final_scale, sizeof(int));
+	grass_array = calloc(x_max * y_max, sizeof(char));
+	water_array = calloc(x_max * final_scale * y_max * final_scale, sizeof(water_type));
+	final_array = calloc(x_max * final_scale * y_max * final_scale, sizeof(int));
 
-   int x = 0;
-   int y = 0;
+	int x = 0;
+	int y = 0;
 
-   char ch;
-   while ((ch = (char) getc(fp)) != EOF)
-   {
-      if(ch == '*' || ch == '-')
-      {
-         grass_array[y * x_max + x] = ch;
-      }
-      else
-      {
-         continue; //tu mozna zrobic obsluge bledu
-      }
-      
-      x++;
-      if(x == x_max)
-      {
-         x = 0;
-         y++;
-      }
-   }
+	char ch;
+	while ((ch = (char)getc(fp)) != EOF)
+	{
+		if (ch == '*' || ch == '-')
+		{
+			grass_array[y * x_max + x] = ch;
+		}
+		else
+		{
+			continue; //tu mozna zrobic obsluge bledu
+		}
+
+		x++;
+		if (x == x_max)
+		{
+			x = 0;
+			y++;
+		}
+	}
 }
 
-void watering_point(int xc, int yc, int type, int rotation)
+int watering_condition(int circle_x, int circle_y, int type, int rotation)
 {
+	int xc = circle_x; // * final_scale;
+	int yc = circle_y; // * final_scale;
 	int radius = 0;
-	for (int y = 0; y < y_max * final_scale; y++)
+	for (int y = yc - type_max_range * final_scale; y < yc + type_max_range * final_scale + 1; y++)
 	{
-		for (int x = 0; x < x_max * final_scale; x++)
+		for (int x = xc - type_max_range * final_scale; x < xc + type_max_range * final_scale + 1; x++)
 		{
 			if (type == 360)
 			{
 				radius = final_scale * type_360_range;
-				if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2))
-					final_array[y * x_max * final_scale + x] += type_360_cycles;
-
+				if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2))
+					if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+						return 1;
 			}
 			else if (type == 270)
 			{
 				radius = final_scale * type_270_range;
 				if (rotation == 1)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && (x < xc || y > yc))
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && (x <= xc || y >= yc))
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 2)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && (x <= xc || y <= yc))
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 3)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && (x >= xc || y <= yc))
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 4)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && (x >= xc || y >= yc))
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+			}
+			else if (type == 180)
+			{
+				radius = final_scale * type_180_range;
+				if (rotation == 1)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && x >= xc)
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 2)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y >= yc)
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 3)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && x <= xc)
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 4)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y <= yc)
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+			}
+			else if (type == 90)
+			{
+				radius = final_scale * type_90_range;
+				if (rotation == 1)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y <= yc && x >= xc)
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 2)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y >= yc && x >= xc)
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 3)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y >= yc && x <= xc)
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+				else if (rotation == 4)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y <= yc && x <= xc)
+						if (x < 0 || x >= x_max * final_scale || y < 0 || y >= y_max * final_scale || grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+							return 1;
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+void watering_point(int xc, int yc, int type, int rotation)
+{
+	int radius = 0;
+	for (int y = max(yc - type_max_range * final_scale, 0); y < min(yc + type_max_range * final_scale + 1,
+	                                                                y_max * final_scale); y++)
+	{
+		for (int x = max(xc - type_max_range * final_scale, 0); x < min(xc + type_max_range * final_scale + 1,
+		                                                                x_max * final_scale); x++)
+		{
+			if (type == 360)
+			{
+				radius = final_scale * type_360_range;
+				if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2))
+					final_array[y * x_max * final_scale + x] += type_360_cycles;
+			}
+			else if (type == 270)
+			{
+				radius = final_scale * type_270_range;
+				if (rotation == 1)
+				{
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && (x <= xc || y >= yc))
 						final_array[y * x_max * final_scale + x] += type_270_cycles;
 				}
 				else if (rotation == 2)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && (x < xc || y < yc))
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && (x <= xc || y <= yc))
 						final_array[y * x_max * final_scale + x] += type_270_cycles;
 				}
 				else if (rotation == 3)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && (x > xc || y < yc))
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && (x >= xc || y <= yc))
 						final_array[y * x_max * final_scale + x] += type_270_cycles;
 				}
 				else if (rotation == 4)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && (x > xc || y > yc))
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && (x >= xc || y >= yc))
 						final_array[y * x_max * final_scale + x] += type_270_cycles;
 				}
 			}
@@ -114,22 +221,22 @@ void watering_point(int xc, int yc, int type, int rotation)
 				radius = final_scale * type_180_range;
 				if (rotation == 1)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && x > xc)
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && x >= xc)
 						final_array[y * x_max * final_scale + x] += type_180_cycles;
 				}
 				else if (rotation == 2)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && y > yc)
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y >= yc)
 						final_array[y * x_max * final_scale + x] += type_180_cycles;
 				}
 				else if (rotation == 3)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && x < xc)
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && x <= xc)
 						final_array[y * x_max * final_scale + x] += type_180_cycles;
 				}
 				else if (rotation == 4)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && y < yc)
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y <= yc)
 						final_array[y * x_max * final_scale + x] += type_180_cycles;
 				}
 			}
@@ -138,39 +245,38 @@ void watering_point(int xc, int yc, int type, int rotation)
 				radius = final_scale * type_90_range;
 				if (rotation == 1)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && y < yc && x > xc)
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y <= yc && x >= xc)
 						final_array[y * x_max * final_scale + x] += type_90_cycles;
 				}
 				else if (rotation == 2)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && y > yc&& x > xc)
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y >= yc && x >= xc)
 						final_array[y * x_max * final_scale + x] += type_90_cycles;
 				}
 				else if (rotation == 3)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && y > yc&& x < xc)
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y >= yc && x <= xc)
 						final_array[y * x_max * final_scale + x] += type_90_cycles;
 				}
 				else if (rotation == 4)
 				{
-					if (pow(xc - x, 2) + pow(yc - y, 2) <= pow(radius, 2) && y < yc && x < xc)
+					if (powf(xc - x, 2) + powf(yc - y, 2) <= powf(radius, 2) && y <= yc && x <= xc)
 						final_array[y * x_max * final_scale + x] += type_90_cycles;
 				}
 			}
 		}
 	}
-} 
+}
 
 void save(char* file_name)
 {
-
 	int y, x;
 	int width = x_max * final_scale;
 	int height = y_max * final_scale;
 	int size = width * height * 4; //for 32-bit bitmap only
 
 
-	char header[54] = { 0 };
+	char header[54] = {0};
 	strcpy(header, "BM");
 	*(int*)(&header[2]) = 54 + size;
 	*(int*)(&header[10]) = 54;
@@ -182,8 +288,10 @@ void save(char* file_name)
 	*(int*)(&header[34]) = size;
 
 	unsigned char* pixels = calloc(size, sizeof(char));
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < width; x++) {
+	for (y = 0; y < height; y++)
+	{
+		for (x = 0; x < width; x++)
+		{
 			int p = (y * width + x) * 4;
 
 			int data = final_array[(height - y - 1) * width + x];
@@ -217,49 +325,46 @@ void save(char* file_name)
 	fclose(fout);
 }
 
-
-
-
-int circle_condition(int circle_x, int circle_y){
-int rad= type_360_range;
-int condition=0;
-for (int y = 0; y < y_max; y++)
-        {
-                for (int x = 0; x < x_max; x++)
-                {
-                        
-                                if (pow(circle_x - x, 2) + pow(circle_y - y, 2) <= pow(rad, 2)){
-					if(grass_array[y * x_max + x] == '-')
-						condition++;
-						}
-							
-						}
+int circle_condition(int circle_x, int circle_y)
+{
+	int cx = circle_x * final_scale;
+	int cy = circle_y * final_scale;
+	for (int y = max(cy - type_360_range * final_scale, 0); y < min(cy + type_360_range * final_scale + 1,
+	                                                                y_max * final_scale); y++)
+	{
+		for (int x = max(cx - type_360_range * final_scale, 0); x < min(cx + type_360_range * final_scale + 1,
+		                                                                x_max * final_scale); x++)
+		{
+			if (powf(cx - x, 2) + powf(cy - y, 2) <= powf(type_360_range * final_scale, 2))
+			{
+				if (grass_array[(y / final_scale) * x_max + (x / final_scale)] == '-')
+					return 1;
+			}
+		}
 	}
-return condition;
+
+	return 0;
 }
 
 void circle_version()
 {
+	double minimum = 0.4;
+	double relation = 0.0;
+	int condition = 0;
 
-double minimum=0.4;  
-double relation=0.0;
-int condition=0;
-
-for(int x=0; x<x_max; x+=3){                            
-                                                       
-        for(int y=0; y<y_max; y+=3){
-		if(grass_array[y*x_max+x]=='*' && water_array[y*x_max+x].type==0 && water_array[y*x_max+x].rotation==0){
-              		 condition=circle_condition(x,y);
-				 if(condition==0)
-
-					set_water(x*final_scale, y*final_scale, 360, 1, 2);
-                               
-                        }}
-
-
+	for (int x = 0; x < x_max; x += 2)
+	{
+		for (int y = 0; y < y_max; y += 2)
+		{
+			if (grass_array[y * x_max + x] == '*' && water_array[y * final_scale * x_max * final_scale + x * final_scale
+			].type == 0 && water_array[y * final_scale * x_max * final_scale + x * final_scale].rotation == 0)
+			{
+				if (circle_condition(x, y) == 0)
+					set_water(x * final_scale, y * final_scale, 360, 1, 2);
+			}
+		}
+	}
 }
-}
-
 
 void trial_version()
 {
@@ -275,7 +380,8 @@ void trial_version()
 				(y_rel >= y_max || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, (y + 1)* final_scale - 1, 90, 1, 1);
+				if (watering_condition(x * final_scale, (y + 1) * final_scale - 1, 90, 1) == 0)
+					set_water(x * final_scale, (y + 1) * final_scale - 1, 90, 1, 1);
 			}
 
 			y_rel -= 2;
@@ -284,7 +390,8 @@ void trial_version()
 				(y_rel < 0 || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 90, 2, 1);
+				if (watering_condition(x * final_scale, y * final_scale, 90, 2) == 0)
+					set_water(x * final_scale, y * final_scale, 90, 2, 1);
 			}
 
 			x_rel += 2;
@@ -293,7 +400,8 @@ void trial_version()
 				(y_rel < 0 || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1) * final_scale - 1, y * final_scale, 90, 3, 1); 
+				if (watering_condition((x + 1) * final_scale - 1, y * final_scale, 90, 3) == 0)
+					set_water((x + 1) * final_scale - 1, y * final_scale, 90, 3, 1);
 			}
 
 			y_rel += 2;
@@ -302,8 +410,12 @@ void trial_version()
 				(y_rel >= y_max || grass_array[y_rel * x_max + x] == '-') &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1)* final_scale - 1, (y + 1) * final_scale - 1, 90, 4, 1);
+				if (watering_condition((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 90, 4) == 0)
+					set_water((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 90, 4, 1);
 			}
+			
+			if ((x + y) % 2 == 1)
+				continue;
 
 			//setting positions of 180 type
 
@@ -311,13 +423,14 @@ void trial_version()
 			y_rel = y;
 
 			if ((x_rel < 0 || grass_array[y_rel * x_max + x_rel] == '-') &&
-				y_rel >= 0 + 1 && 
-				y_rel < y_max - 1 && 
+				y_rel >= 0 + 1 &&
+				y_rel < y_max - 1 &&
 				grass_array[(y_rel - 1) * x_max + x] == '*' &&
 				grass_array[(y_rel + 1) * x_max + x] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 180, 1, 1);
+				if (watering_condition(x * final_scale, y * final_scale, 180, 1) == 0)
+					set_water(x * final_scale, y * final_scale, 180, 1, 1);
 			}
 
 			x_rel = x;
@@ -330,7 +443,8 @@ void trial_version()
 				grass_array[y * x_max + (x_rel + 1)] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 180, 2, 1);
+				if (watering_condition(x * final_scale, y * final_scale, 180, 2) == 0)
+					set_water(x * final_scale, y * final_scale, 180, 2, 1);
 			}
 
 			x_rel = x + 1;
@@ -343,7 +457,8 @@ void trial_version()
 				grass_array[(y_rel + 1) * x_max + x] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1)* final_scale - 1, y * final_scale, 180, 3, 1);
+				if (watering_condition((x + 1) * final_scale - 1, y * final_scale, 180, 3) == 0)
+					set_water((x + 1) * final_scale - 1, y * final_scale, 180, 3, 1);
 			}
 
 			x_rel = x;
@@ -356,7 +471,8 @@ void trial_version()
 				grass_array[y * x_max + (x_rel + 1)] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, (y + 1)* final_scale -1, 180, 4, 1);
+				if (watering_condition(x * final_scale, (y + 1) * final_scale - 1, 180, 4) == 0)
+					set_water(x * final_scale, (y + 1) * final_scale - 1, 180, 4, 1);
 			}
 
 
@@ -372,19 +488,21 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1) * final_scale - 1, y* final_scale, 270, 1, 1);
+				if (watering_condition((x + 1) * final_scale - 1, y * final_scale, 270, 1) == 0)
+					set_water((x + 1) * final_scale - 1, y * final_scale, 270, 1, 1);
 			}
 
 			y_rel = y + 1;
 
-			if (x_rel < x_max && 
+			if (x_rel < x_max &&
 				y_rel < y_max &&
 				grass_array[y_rel * x_max + x_rel] == '-' &&
 				grass_array[y_rel * x_max + x] == '*' &&
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water((x + 1)* final_scale - 1, (y + 1)* final_scale - 1, 270, 2, 1);
+				if (watering_condition((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 270, 2) == 0)
+					set_water((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 270, 2, 1);
 			}
 
 			x_rel = x - 1;
@@ -396,7 +514,8 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, (y + 1) * final_scale - 1, 270, 3, 1);
+				if (watering_condition(x * final_scale, (y + 1) * final_scale - 1, 270, 3) == 0)
+					set_water(x * final_scale, (y + 1) * final_scale - 1, 270, 3, 1);
 			}
 
 			y_rel = y - 1;
@@ -408,10 +527,9 @@ void trial_version()
 				grass_array[y * x_max + x_rel] == '*' &&
 				(grass_array[y * x_max + x] == '*'))
 			{
-				set_water(x * final_scale, y * final_scale, 270, 4, 1);
+				if (watering_condition(x * final_scale, y * final_scale, 270, 4) == 0)
+					set_water(x * final_scale, y * final_scale, 270, 4, 1);
 			}
-
-
 		}
 	}
 }
@@ -426,57 +544,52 @@ void read_data_from_water_array()
 		for (int x = 0; x < x_max * final_scale; x++)
 		{
 			if (water_array[y * x_max * final_scale + x].type != 0 &&
-				water_array[y * x_max * final_scale + x].rotation != 0 && water_array[y*x_max*final_scale+x].use==1)
+				water_array[y * x_max * final_scale + x].rotation != 0 && water_array[y * x_max * final_scale + x].use
+				== 1)
 			{
 				type = water_array[y * x_max * final_scale + x].type;
 				rotation = water_array[y * x_max * final_scale + x].rotation;
 				watering_point(x, y, type, rotation);
 			}
-
 		}
 	}
-
 }
 
 void read_data_from_water_array_circle()
 {
-        int type;
-        int rotation;
-        int use;
+	int type;
+	int rotation;
+	int use;
 
-        for (int y = 0; y < y_max * final_scale; y++)
-        {
-                for (int x = 0; x < x_max * final_scale; x++)
-                {
-                        if (water_array[y * x_max * final_scale + x].type != 0 &&
-                                water_array[y * x_max * final_scale + x].rotation != 0 && water_array[y*x_max*final_scale+x].use==2)
-                        {
-                                type = water_array[y * x_max * final_scale + x].type;
-                                rotation = water_array[y * x_max * final_scale + x].rotation;
-                                watering_point(x, y, type, rotation);
-                        }
-
-                }
-        }
-
+	for (int y = 0; y < y_max * final_scale; y++)
+	{
+		for (int x = 0; x < x_max * final_scale; x++)
+		{
+			if (water_array[y * x_max * final_scale + x].type != 0 &&
+				water_array[y * x_max * final_scale + x].rotation != 0 && water_array[y * x_max * final_scale + x].use
+				== 2)
+			{
+				type = water_array[y * x_max * final_scale + x].type;
+				rotation = water_array[y * x_max * final_scale + x].rotation;
+				watering_point(x, y, type, rotation);
+			}
+		}
+	}
 }
-
 
 int main(int argc, char** argv)
 {
 	double start = time(NULL);
 
-	FILE* grass_file= argc> 1 ? fopen (argv[1], "r"):stdin;
+	FILE* grass_file = argc > 1 ? fopen(argv[1], "r") : stdin;
 	grass_load(grass_file);
 	trial_version();
 	read_data_from_water_array();
 	circle_version();
 	read_data_from_water_array_circle();
-	watering_point(100,100,360,1);
 	save("output.bmp");
 
 
 	printf("Czas wykonywania: %g sekund\n", time(NULL) - start);
 	return 0;
-
 }
