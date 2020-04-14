@@ -15,6 +15,10 @@ int main(int argc, char** argv)
 	double start = time(NULL);
 	
 	FILE* grass_file = argc > 1 ? fopen(argv[1], "r") : fopen("tests/test4.txt", "r");
+  		 if (grass_file==NULL) {
+    		 printf ("Nie mozna otworzyc pliku %s !\n", argv[1]);
+		 exit(1);
+    		 }
 	grass_load(grass_file);
 	setup_algorytm();
 	read_data_from_water_array();

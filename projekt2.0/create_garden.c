@@ -23,10 +23,10 @@ void grass_load(FILE* fp)
 		{
 			grass_array[y * x_max + x] = ch;
 		}
-		else
-		{
-			continue; //tu mozna zrobic obsluge bledu
-		}
+		
+		else{
+			continue;
+			}
 
 		x++;
 		if (x == x_max)
