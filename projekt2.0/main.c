@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 {
 	double start = time(NULL);
 	
-	FILE* grass_file = argc > 1 ? fopen(argv[1], "r") : stdin;
+	FILE* grass_file = argc > 1 ? fopen(argv[1], "r") : fopen("tests/test2.txt", "r");
 	grass_load(grass_file);
 	trial_version();
 	read_data_from_water_array();
