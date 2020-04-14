@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -123,7 +125,6 @@ int watering_condition(int circle_x, int circle_y, int type, int rotation)
 }
 
 
-
 int circle_condition(int circle_x, int circle_y)
 {
 	int cx = circle_x * final_scale;
@@ -164,7 +165,7 @@ void circle_version()
 	}
 }
 
-void trial_version()
+void setup_algorytm()
 {
 	for (int y = 0; y < y_max; y++)
 	{
