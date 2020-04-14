@@ -4,9 +4,7 @@
 #include <stdlib.h>
 
 
-#include "create_files.h"
 #include "setup.h"
-#include "water.h"
 #include "create_garden.h"
 
 void grass_load(FILE* fp)
