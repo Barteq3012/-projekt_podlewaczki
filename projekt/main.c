@@ -14,7 +14,7 @@ typedef struct water {
 
 int x_max = 80;
 int y_max = 40;
-int final_scale = 30;
+int final_scale = 10;
 
 int type_360_range = 2;
 int type_270_range = 3;
