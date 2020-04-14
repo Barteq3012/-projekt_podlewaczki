@@ -11,6 +11,7 @@
 #define type_180_range 2
 #define type_90_range 4
 
+
 typedef struct water
 {
 	int rotation; // obrot poszczegolnej podlewczki
@@ -24,7 +25,7 @@ water_type* water_array;
 int watering_condition(int circle_x, int circle_y, int type, int rotation);
 int circle_condition(int circle_x, int circle_y);
 void circle_version();
-void trial_version();
+void setup_algorytm();
 void set_water(int x, int y, int type, int rotation, int use);
 
 
