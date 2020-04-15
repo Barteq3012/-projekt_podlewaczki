@@ -211,7 +211,7 @@ void setup_algorytm()
 					set_water((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 90, 4, 1);
 			}
 			
-			if ((x + y) % 2 == 1)
+			if ((x + y) % 2 == 1) //¿eby nie stawia³o na nieparystych miejscach a nie wszêdzie gdzie to mo¿liwe
 				continue;
 
 			//setting positions of 180 type
