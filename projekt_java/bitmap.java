@@ -8,8 +8,9 @@ import javax.swing.ImageIcon;
 
 public class bitmap {
 
-
-
+	static int x_max = 800;
+	static int y_max = 400;
+	
 	
 	
 	
@@ -25,10 +26,10 @@ public class bitmap {
 		int x = 770;
 		int y = 30;
 		int r = 100;
-		BufferedImage image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
-		for(int i = 1; i < 400; i++)
+		BufferedImage image = new BufferedImage(x_max, y_max, BufferedImage.TYPE_4BYTE_ABGR);
+		for(int i = 1; i < y_max; i++)
 		{
-			for(int j = 1; j < 800; j++) 
+			for(int j = 1; j < x_max; j++) 
 			{
 				if((Math.pow(x - j, 2) + Math.pow(y - i, 2)) <= Math.pow(r,  2))
 				{
