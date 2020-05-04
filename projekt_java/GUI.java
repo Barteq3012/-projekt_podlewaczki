@@ -20,6 +20,7 @@ public class GUI {
 	public static JLabel BitmapLabel;
 	private JTextField TxtShape;
 	private JTextField textField_1;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -94,37 +95,48 @@ public class GUI {
 		ReflectionRadioButton.setBackground(SystemColor.activeCaption);
 		ReflectionRadioButton.setForeground(Color.BLACK);
 		ReflectionRadioButton.setSelected(true);
-		ReflectionRadioButton.setBounds(10, 132, 109, 23);
+		ReflectionRadioButton.setBounds(10, 122, 109, 23);
 		frame.getContentPane().add(ReflectionRadioButton);
 		
 		JLabel CycleTimeLabel = new JLabel("Wprowadz czas cyklu:");
 		CycleTimeLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		CycleTimeLabel.setBounds(10, 162, 180, 14);
+		CycleTimeLabel.setBounds(10, 148, 180, 14);
 		frame.getContentPane().add(CycleTimeLabel);
 		
 		textField_1 = new JTextField();
-		textField_1.setText("2");
-		textField_1.setBounds(10, 184, 180, 20);
+		textField_1.setText("0.1");
+		textField_1.setBounds(10, 170, 180, 20);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
 		JButton StartButton = new JButton("Start");
-		StartButton.setBounds(10, 215, 180, 23);
+		StartButton.setBounds(10, 261, 180, 23);
 		frame.getContentPane().add(StartButton);
 		
 		JButton StopButton = new JButton("Stop");
-		StopButton.setBounds(10, 249, 180, 23);
+		StopButton.setBounds(10, 295, 180, 23);
 		frame.getContentPane().add(StopButton);
 		
 		JButton ClearButton = new JButton("Wyczy\u015B\u0107");
-		ClearButton.setBounds(10, 280, 180, 23);
+		ClearButton.setBounds(10, 326, 180, 23);
 		frame.getContentPane().add(ClearButton);
 		
 		JLabel EndLabel = new JLabel("Koniec!");
 		EndLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		EndLabel.setFont(new Font("Arial", Font.BOLD, 18));
 		EndLabel.setForeground(SystemColor.text);
-		EndLabel.setBounds(10, 336, 180, 14);
+		EndLabel.setBounds(10, 374, 180, 14);
 		frame.getContentPane().add(EndLabel);
+		
+		JLabel CycleTimeLabel_1 = new JLabel("Wprowadz iloœæ cykli:");
+		CycleTimeLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		CycleTimeLabel_1.setBounds(10, 196, 180, 14);
+		frame.getContentPane().add(CycleTimeLabel_1);
+		
+		textField = new JTextField();
+		textField.setText("1");
+		textField.setColumns(10);
+		textField.setBounds(10, 218, 180, 20);
+		frame.getContentPane().add(textField);
 	}
 }
