@@ -13,12 +13,15 @@ public class Trawnik  {
 
     public static void main(String[] args) throws IOException {
         ArrayList<Character>grass_array= new ArrayList<>();
-        //ArrayList<Integer>final_array= new ArrayList<>();
+       ArrayList<Integer>final_array= new ArrayList<>();
         File f = new File(args[0]);
         FileReader fr=new FileReader(f);
         BufferedReader br=new BufferedReader(fr);
         int c=0;
-        char ch;  
+        char ch; 
+	 int x_max = 80;
+          int y_max = 40;
+         int final_scale = 50; 
         
     
                 while((c=br.read())!=-1){
@@ -29,10 +32,16 @@ public class Trawnik  {
                    
                 }
       
-          System.out.println(grass_array.size());
-	   Setup s = new Setup(grass_array);
+         for(int i=0; i<(x_max * final_scale * y_max * final_scale); i++)
+                    final_array.add(0);
+      
+          System.out.println(grass_array);
+          Setup s = new Setup(grass_array);
+          Water w = new Water();
           s.setup_algorytm(grass_array);
-            s.circle_version(grass_array);
+          w.read_data_from_water_array(final_array);
+          s.circle_version(grass_array);
+          w.read_data_from_water_array_circle(final_array);
          
     }
     

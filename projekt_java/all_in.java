@@ -14,6 +14,12 @@ public class all_in  {
     int type_180_range = 2;
     int type_90_range = 4;
     int type_max_range = 4;
+
+     int type_360_cycles = 1;
+   int type_270_cycles = 2;
+   int type_180_cycles = 3;
+   int type_90_cycles = 4;
+
     public ArrayList <Water_sprinkler> water_array;
     
 }
