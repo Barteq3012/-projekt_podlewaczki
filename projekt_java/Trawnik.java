@@ -30,7 +30,9 @@ public class Trawnik  {
                 }
       
           System.out.println(grass_array.size());
-	  Setup s = new Setup(grass_array);
+	   Setup s = new Setup(grass_array);
+          s.setup_algorytm(grass_array);
+            s.circle_version(grass_array);
          
     }
     

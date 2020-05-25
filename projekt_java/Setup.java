@@ -6,11 +6,11 @@ import java.util.ArrayList;
 public class Setup extends all_in {
  
     
-    public Setup (ArrayList<Character> grass_array){
+      public Setup (ArrayList<Character> grass_array){
     
-    setup_algorytm(grass_array);
     
-    }
+   }
+    
     
  
     
@@ -144,7 +144,7 @@ private int circle_condition(int circle_x, int circle_y, ArrayList<Character> gr
 	return 0;
 }
 
-private void circle_version(ArrayList<Character> grass_array)
+public void circle_version(ArrayList<Character> grass_array)
 {
 	
 	int condition = 0;
@@ -167,7 +167,7 @@ private void circle_version(ArrayList<Character> grass_array)
 	}
 }
 
-private void setup_algorytm(ArrayList<Character> grass_array)
+public void setup_algorytm(ArrayList<Character> grass_array)
 {
 	for (int y = 0; y < y_max; y++)
 	{
