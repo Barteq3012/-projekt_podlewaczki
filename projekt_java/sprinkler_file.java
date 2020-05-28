@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class sprinkler_file extends all_in {
         
     
-   public void writePositionsToFile(String name) throws FileNotFoundException {
+   public void sprinkler_file (String name) throws FileNotFoundException {
         PrintWriter file = new PrintWriter(name);
         file.println("Position x:  Position y:  Type:  Rotation:");
         for (int i = 0; i < water_array.size(); i++) {
