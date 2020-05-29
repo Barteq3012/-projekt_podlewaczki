@@ -12,7 +12,7 @@ public class Trawnik{
 
     
    
-    public   void start (String[] args) throws IOException {
+    public static void start (String[] args) throws IOException {
         
         if(args.length == 0)
             {
