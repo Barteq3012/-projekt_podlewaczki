@@ -4,12 +4,7 @@ package trawnik;
 import java.util.ArrayList;
 
 
-public class Water extends all_in  {
-    
-    Water (){
-    }
-    
-    
+public class Water extends all_in  {    
     
     void watering_point(int xc, int yc, int type, int rotation, ArrayList<Integer> final_array)
 {
@@ -185,3 +180,7 @@ public void read_data_from_water_array_circle(ArrayList<Integer> final_array)
 				watering_point(x, y, type, rotation, final_array);
 			}
 		}
+
+	}
+}
+}
