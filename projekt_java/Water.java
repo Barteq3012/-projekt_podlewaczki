@@ -145,19 +145,18 @@ public void read_data_from_water_array(ArrayList<Integer> final_array)
 	int type;
 	int rotation;
 
-	for (int y = 0; y < y_max * final_scale; y++)
+	for (int i = 0; i < water_array.size(); i++)
 	{
-		for (int x = 0; x < x_max * final_scale; x++)
-		{
-			if (water_array.get(y * x_max * final_scale + x).getType() != 0 &&
-				water_array.get(y * x_max * final_scale + x).getRotation() != 0 && water_array.get(y * x_max * final_scale + x).getUse()
+		
+			if (water_array.get(i).getType() != 0 &&
+				water_array.get(i).getRotation() != 0 && water_array.get(i).getUse()
 				== 1)
 			{
-				type = water_array.get(y * x_max * final_scale + x).getType();
-				rotation = water_array.get(y * x_max * final_scale + x).getRotation();
-				watering_point(x, y, type, rotation, final_array);
+				type = water_array.get(i).getType();
+				rotation = water_array.get(i).getRotation();
+				watering_point(water_array.get(i).getX(), water_array.get(i).getY(), type, rotation, final_array);
 			}
-		}
+		
 	}
 }
 
@@ -167,19 +166,18 @@ public void read_data_from_water_array_circle(ArrayList<Integer> final_array)
 	int rotation;
 	int use;
 
-	for (int y = 0; y < y_max * final_scale; y++)
+	for (int i = 0; i < water_array.size(); i++)
 	{
-		for (int x = 0; x < x_max * final_scale; x++)
-		{
-			if (water_array.get(y * x_max * final_scale + x).getType()!= 0 &&
-				water_array.get(y * x_max * final_scale + x).getRotation() != 0 && water_array.get(y * x_max * final_scale + x).getUse()
+		
+			if (water_array.get(i).getType()!= 0 &&
+				water_array.get(i).getRotation() != 0 && water_array.get(i).getUse()
 				== 2)
 			{
-				type = water_array.get(y * x_max * final_scale + x).getType();
-				rotation = water_array.get(y * x_max * final_scale + x).getRotation();
-				watering_point(x, y, type, rotation, final_array);
+				type = water_array.get(i).getType();
+				rotation = water_array.get(i).getRotation();
+				watering_point(water_array.get(i).getX(), water_array.get(i).getY(), type, rotation, final_array);
 			}
-		}
+		
 
 	}
 }
