@@ -2,7 +2,7 @@
 package trawnik;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class all_in  {
      int x_max = 80;
@@ -20,6 +20,6 @@ public class all_in  {
    int type_180_cycles = 3;
    int type_90_cycles = 4;
 
-    public ArrayList <Water_sprinkler> water_array= new ArrayList<>();
+     static List <Water_sprinkler> water_array= new ArrayList<>();
     
 }

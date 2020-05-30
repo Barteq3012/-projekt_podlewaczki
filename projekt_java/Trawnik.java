@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
 
-public class Trawnik {
+public class Trawnik extends all_in {
 
 	public static void main(String[] args) throws IOException {
 
@@ -64,9 +64,15 @@ public class Trawnik {
 		Setup s = new Setup();
 		//Water w = new Water();
 		s.setup_algorytm(grass_array);
+		
+
+		System.out.println(water_array.size());
 		//w.read_data_from_water_array(final_array);
 		//s.circle_version(grass_array);
 		//w.read_data_from_water_array_circle(final_array);
 	}
+
+
+
 
 }
