@@ -2,6 +2,7 @@
 package trawnik;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Setup extends all_in {
 
@@ -133,21 +134,31 @@ private int circle_condition(int circle_x, int circle_y, ArrayList<Character> gr
 	return 0;
 }
 
+
 public void circle_version(ArrayList<Character> grass_array)
 {
+	List <Water_sprinkler> water_array_clone= new ArrayList<>();
+	for(int t=0; t<water_array.size(); t++)
+	water_array_clone.add(water_array.get(t));
 	
+      
 	int condition = 0;
 
 	for (int x = 0; x < x_max; x += 2)
 	{
 		for (int y = 0; y < y_max; y += 2)
-		{
-			if (grass_array.get(y * x_max + x) == '*' && water_array.get(y * final_scale * x_max * final_scale + x * final_scale
-                        ).getType() == 0 && water_array.get(y * final_scale * x_max * final_scale + x * final_scale).getRotation() == 0)
+		{ for(int i=0; i<water_array_clone.size(); i++)
+			if (grass_array.get(y * x_max + x) == '*' && water_array_clone.get(i).getX()!=x*final_scale && water_array_clone.get(i).getY()!=y*final_scale)
 			{
 				if (circle_condition(x, y, grass_array) == 0){
                                     Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 360, 1, 2);
                                     water_array.add(new_sprinkler);
+				    water_array_clone.add(new_sprinkler);
+                                    water_array_clone.get(i).visit();
+				    for (int j=0; j<water_array_clone.size(); j++)
+					if(water_array_clone.get(j).wasVisited()==true)
+						water_array_clone.remove(j);
+					
                                 
                                 }
 					

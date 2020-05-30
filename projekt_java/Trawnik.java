@@ -68,8 +68,8 @@ public class Trawnik extends all_in {
 
 		System.out.println(water_array.size());
 		w.read_data_from_water_array(final_array);
-		//s.circle_version(grass_array);
-		//w.read_data_from_water_array_circle(final_array);
+		s.circle_version(grass_array);
+		w.read_data_from_water_array_circle(final_array);
 	}
 
 
