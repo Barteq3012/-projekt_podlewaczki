@@ -1,4 +1,4 @@
-package trawnik;
+//package trawnik;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +17,6 @@ public class Trawnik extends all_in {
 		}
 
 		ArrayList<Character> grass_array = new ArrayList<>();
-		ArrayList<Integer> final_array = new ArrayList<>();
 		File f = new File(args[0]);
 		FileReader fr = new FileReader(f);
 		int c = 0;
@@ -47,10 +46,10 @@ public class Trawnik extends all_in {
 			e.printStackTrace();
 		}
 
-
-		
-		for (int i = 0; i < (x_max * final_scale * y_max * final_scale); i++)
+		for (int j = 0; j < (x_max * final_scale * y_max * final_scale); j++)
 			final_array.add(0);
+		
+		
 
 		for(int i = 0; i < y_max; i++)
 		{
@@ -65,11 +64,18 @@ public class Trawnik extends all_in {
 		Water w = new Water();
 		s.setup_algorytm(grass_array);
 		
-
+		System.out.println("Rozmiar water_array pierwsze wywołanie");
 		System.out.println(water_array.size());
-		w.read_data_from_water_array(final_array);
+		w.read_data_from_water_array();
+		
 		s.circle_version(grass_array);
-		w.read_data_from_water_array_circle(final_array);
+		System.out.println("Rozmiar water_array drugie wywołanie");
+		System.out.println(water_array.size());
+		w.read_data_from_water_array_circle();
+		
+			
+
+	
 	}
 
 
