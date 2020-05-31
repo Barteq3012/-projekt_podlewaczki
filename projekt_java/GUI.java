@@ -13,12 +13,25 @@ import javax.swing.JButton;
 import java.awt.SystemColor;
 import javax.swing.JRadioButton;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GUI{
 
 	public static JFrame frame;
 	public static JLabel BitmapLabel;
-	private JTextField TxtShape;
 	private JTextField textField_1;
 	private JTextField textField;
 
@@ -34,7 +47,7 @@ public class GUI{
 					
 					
 					//bitmap.draw_bitmap();
-					Trawnik grass = new Trawnik();
+					//Trawnik grass = new Trawnik();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -73,19 +86,7 @@ public class GUI{
 		BitmapLabel.setBounds(0, 0, 800, 400);
 		panel.add(BitmapLabel);
 		
-		JLabel SetNameOfFileLabel = new JLabel("Wprowadz nazw\u0119 pliku:");
-		SetNameOfFileLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		SetNameOfFileLabel.setBounds(10, 11, 180, 14);
-		frame.getContentPane().add(SetNameOfFileLabel);
-		
-		TxtShape = new JTextField();
-		TxtShape.setBackground(SystemColor.text);
-		TxtShape.setText("trawnik.txt");
-		TxtShape.setBounds(10, 36, 180, 20);
-		frame.getContentPane().add(TxtShape);
-		TxtShape.setColumns(10);
-		
-		JLabel CorrectShapeLabel = new JLabel("Kszta\u0142t wprowadzony pomy\u015Blnie");
+		JLabel CorrectShapeLabel = new JLabel("Wprowadz kszta³t trawnika");
 		CorrectShapeLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		CorrectShapeLabel.setBounds(10, 101, 180, 14);
 		frame.getContentPane().add(CorrectShapeLabel);
@@ -112,10 +113,6 @@ public class GUI{
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
-		JButton StartButton = new JButton("Start");
-		StartButton.setBounds(10, 261, 180, 23);
-		frame.getContentPane().add(StartButton);
-		
 		JButton StopButton = new JButton("Stop");
 		StopButton.setBounds(10, 295, 180, 23);
 		frame.getContentPane().add(StopButton);
@@ -141,5 +138,58 @@ public class GUI{
 		textField.setColumns(10);
 		textField.setBounds(10, 218, 180, 20);
 		frame.getContentPane().add(textField);
+		
+		JButton btnNewButton = new JButton("Kszta³t z pliku");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				
+				System.out.println("xd");
+				
+				 System.out.println("Open");
+			        //openSuccess.setText("  ");
+			        JFileChooser chooseFile = new JFileChooser();
+			        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt"); //dodajesz tutaj rozszrzezenie ktore chcesz by wyszukiwal
+			        chooseFile.setAcceptAllFileFilterUsed(false); //wylacz by byly wsystkie pliki widoczne
+			        chooseFile.setFileFilter(filter);
+			        int result = chooseFile.showOpenDialog(frame);
+			        if (result == JFileChooser.APPROVE_OPTION) {
+			
+			        	File file = chooseFile.getSelectedFile();
+			            Trawnik.filename = file.getAbsolutePath();
+			          
+			        }
+
+			  
+			       else if (result == JFileChooser.CANCEL_OPTION) {
+			            System.out.println("Cancel was selected");
+			        }
+
+			}                                      
+				
+		
+		});
+		btnNewButton.setBounds(10, 33, 180, 23);
+		frame.getContentPane().add(btnNewButton);
+		
+		JButton StartButton = new JButton("Start");
+		StartButton.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				
+				try {
+					if(Trawnik.filename != null) {
+					Trawnik grass = new Trawnik();
+					}
+					else {
+						CorrectShapeLabel.setForeground(Color.RED);
+						CorrectShapeLabel.setText("Najpierw wprowadz plik!");
+					}
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				
+				}
+			});
+		StartButton.setBounds(10, 261, 180, 23);
+		frame.getContentPane().add(StartButton);
 	}
 }

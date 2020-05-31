@@ -9,7 +9,9 @@ import java.io.FileNotFoundException;
 
 public class Trawnik extends all_in  {
 
-	/*public static void main(String[] args) throws IOException {
+	protected static String filename;
+
+/*public static void main(String[] args) throws IOException {
 
 		if (args.length == 0) {
 			System.out.println("No input file given.");
@@ -17,7 +19,7 @@ public class Trawnik extends all_in  {
 		}
 */ public Trawnik() throws FileNotFoundException{
 		ArrayList<Character> grass_array = new ArrayList<>();
-		File f = new File("test1.txt");
+		File f = new File(filename);
 		FileReader fr = new FileReader(f);
 		int c = 0;
 		char ch;
