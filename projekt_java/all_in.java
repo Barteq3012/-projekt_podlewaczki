@@ -6,7 +6,7 @@ import java.util.List;
 public class all_in  {
     protected static final int x_max = 80;
     protected static final  int y_max = 40;
-    protected static final int final_scale = 50;
+    protected static final int final_scale = 10;
      
     protected static final int type_360_range = 2;
     protected static final int type_270_range = 3;

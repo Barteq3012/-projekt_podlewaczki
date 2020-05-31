@@ -1,4 +1,4 @@
-package bitmap;
+package trawnik;
 
 import java.awt.EventQueue;
 
@@ -14,7 +14,7 @@ import java.awt.SystemColor;
 import javax.swing.JRadioButton;
 import java.awt.Font;
 
-public class GUI {
+public class GUI{
 
 	public static JFrame frame;
 	public static JLabel BitmapLabel;
@@ -31,7 +31,10 @@ public class GUI {
 				try {
 					GUI window = new GUI();
 					window.frame.setVisible(true);
-					bitmap.draw_circle();
+					
+					
+					//bitmap.draw_bitmap();
+					Trawnik grass = new Trawnik();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

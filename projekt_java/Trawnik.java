@@ -7,17 +7,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
 
-public class Trawnik extends all_in {
+public class Trawnik extends all_in  {
 
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 
 		if (args.length == 0) {
 			System.out.println("No input file given.");
 			return;
 		}
-
+*/ public Trawnik() throws FileNotFoundException{
 		ArrayList<Character> grass_array = new ArrayList<>();
-		File f = new File(args[0]);
+		File f = new File("test1.txt");
 		FileReader fr = new FileReader(f);
 		int c = 0;
 		char ch;
@@ -27,7 +27,7 @@ public class Trawnik extends all_in {
 
 		int x_max = 80;
 		int y_max = 40;
-		int final_scale = 50;
+		int final_scale = 10;
 
 		try (BufferedReader br = new BufferedReader(fr)) 
 		{ 
@@ -64,15 +64,16 @@ public class Trawnik extends all_in {
 		Water w = new Water();
 		s.setup_algorytm(grass_array);
 		
-		System.out.println("Rozmiar water_array pierwsze wywołanie");
+		System.out.println("Rozmiar water_array pierwsze wywolanie");
 		System.out.println(water_array.size());
 		w.read_data_from_water_array();
 		
 		s.circle_version(grass_array);
-		System.out.println("Rozmiar water_array drugie wywołanie");
+		System.out.println("Rozmiar water_array drugie wywolanie");
 		System.out.println(water_array.size());
 		w.read_data_from_water_array_circle();
 		
+		bitmap.draw_bitmap();
 			
 
 	
