@@ -9,7 +9,7 @@ public class bitmap extends all_in {
 	static private int r = 0;
 	static private int g = 0;
 	static private int b = 0;
-	static private int data = 0;
+	static private double data = 0.0;
 	static int width = x_max * final_scale;
 	static int height = y_max * final_scale;
 	static double average = 0.0;

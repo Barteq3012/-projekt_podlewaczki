@@ -112,10 +112,12 @@ private int watering_condition(int circle_x, int circle_y, int type, int rotatio
 }
 
 
-private int circle_condition(int circle_x, int circle_y, ArrayList<Character> grass_array)
+private int circle_condition(int circle_x, int circle_y, ArrayList<Character> grass_array, int bonus)
 {
 	int cx = circle_x * final_scale;
 	int cy = circle_y * final_scale;
+	if(bonus==1)
+	return 0;
 	for (int y = Math.max(cy - type_360_range * final_scale, 0); y < Math.min(cy + type_360_range * final_scale + 1,
 	                                                                y_max * final_scale); y++)
 	{
@@ -133,7 +135,7 @@ private int circle_condition(int circle_x, int circle_y, ArrayList<Character> gr
 	return 0;
 }
 
-public void circle_version(ArrayList<Character> grass_array)
+public void circle_version(ArrayList<Character> grass_array, int bonus)
 {
 	int n=0;
 	    
@@ -147,8 +149,28 @@ public void circle_version(ArrayList<Character> grass_array)
 					if(water_array.get(i).getX()==x*final_scale && water_array.get(i).getY()==y*final_scale)
 						n++;
 					if(n==0){
-				if (circle_condition(x, y, grass_array) == 0){
-                                    Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 360, 1, 2);
+				if (circle_condition(x, y, grass_array, bonus) == 0){
+
+					int other=0;
+					int all=0;
+					int r=2;
+						for(int i = 0; i < y_max; i++)
+						{
+						for(int j = 0; j < x_max; j++){
+       	
+     
+    							if ((j - x) * (j - x) +(i - y) * (i - y) <= r * r){
+								all++;
+								if(grass_array.get(i * x_max + j)=='-')
+									other++;
+		
+									}
+		     
+		                                   }}			double extra;
+									if(other!=0)
+		 								extra=(all/other)*0.2;
+											else extra=0;
+                                    Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 360, 1, 2,extra);
                                     water_array.add(new_sprinkler);
                                 
                                 		}
@@ -177,7 +199,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition(x * final_scale, (y + 1) * final_scale - 1, 90, 1, grass_array) == 0){
                                         
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, (y + 1) * final_scale - 1, 90, 1, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, (y + 1) * final_scale - 1, 90, 1, 1, 0);
                                         water_array.add(new_sprinkler);
                                 }
 					
@@ -191,7 +213,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition(x * final_scale, y * final_scale, 90, 2, grass_array) == 0){
                                         
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 90, 2, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 90, 2, 1, 0);
                                         water_array.add(new_sprinkler);
 
                                 }
@@ -206,7 +228,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition((x + 1) * final_scale - 1, y * final_scale, 90, 3, grass_array) == 0){
                                         
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, y * final_scale, 90, 3, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, y * final_scale, 90, 3, 1, 0);
                                         water_array.add(new_sprinkler);
                                 }
 					
@@ -220,7 +242,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 90, 4, grass_array) == 0){
                                 
-                                      Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 90, 4, 1);
+                                      Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 90, 4, 1, 0);
                                        water_array.add(new_sprinkler);
 							
                                     
@@ -246,7 +268,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition(x * final_scale, y * final_scale, 180, 1, grass_array) == 0){
                                 
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 180, 1, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 180, 1, 1, 0);
                                         water_array.add(new_sprinkler);
                                 }
 					
@@ -264,7 +286,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition(x * final_scale, y * final_scale, 180, 2, grass_array) == 0){
                                         
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 180, 2, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 180, 2, 1, 0);
                                         water_array.add(new_sprinkler);
                                     
                                 
@@ -284,7 +306,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition((x + 1) * final_scale - 1, y * final_scale, 180, 3, grass_array) == 0){
                                         
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, y * final_scale, 180, 3, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, y * final_scale, 180, 3, 1, 0);
                                         water_array.add(new_sprinkler);
                                 }
 					
@@ -302,7 +324,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition(x * final_scale, (y + 1) * final_scale - 1, 180, 4, grass_array) == 0){
                                 
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, (y + 1) * final_scale - 1, 180, 4, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, (y + 1) * final_scale - 1, 180, 4, 1, 0);
                                         water_array.add(new_sprinkler);
                                 }
 					
@@ -323,7 +345,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition((x + 1) * final_scale - 1, y * final_scale, 270, 1, grass_array) == 0){
                                         
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, y * final_scale, 270, 1, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, y * final_scale, 270, 1, 1, 0);
                                         water_array.add(new_sprinkler);
                                     
                                 }
@@ -341,7 +363,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 270, 2, grass_array) == 0){
                                 
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 270, 2, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler((x + 1) * final_scale - 1, (y + 1) * final_scale - 1, 270, 2, 1, 0);
                                         water_array.add(new_sprinkler);
                                 }
 					
@@ -358,7 +380,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition(x * final_scale, (y + 1) * final_scale - 1, 270, 3, grass_array) == 0){
                                 
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, (y + 1) * final_scale - 1, 270, 3, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, (y + 1) * final_scale - 1, 270, 3, 1, 0);
                                         water_array.add(new_sprinkler);
                                 }
 					
@@ -375,7 +397,7 @@ public void setup_algorytm(ArrayList<Character> grass_array)
 			{
 				if (watering_condition(x * final_scale, y * final_scale, 270, 4, grass_array) == 0){
                                 
-                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 270, 4, 1);
+                                        Water_sprinkler new_sprinkler = new Water_sprinkler(x * final_scale, y * final_scale, 270, 4, 1, 0);
                                         water_array.add(new_sprinkler);
                                 
                                 }

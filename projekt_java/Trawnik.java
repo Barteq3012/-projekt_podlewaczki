@@ -49,7 +49,7 @@ public class Trawnik extends all_in  {
 		}
 
 		for (int j = 0; j < (x_max * final_scale * y_max * final_scale); j++)
-			final_array.add(0);
+			final_array.add(0.0);
 		
 		
 
@@ -68,12 +68,12 @@ public class Trawnik extends all_in  {
 		
 		System.out.println("Rozmiar water_array pierwsze wywolanie");
 		System.out.println(water_array.size());
-		w.read_data_from_water_array();
-		
-		s.circle_version(grass_array);
+		w.read_data_from_water_array(grass_array);
+		reflection=1;
+		s.circle_version(grass_array, reflection); // jeden albo zero pobiera z GUI czy z odbiciem
 		System.out.println("Rozmiar water_array drugie wywolanie");
 		System.out.println(water_array.size());
-		w.read_data_from_water_array_circle();
+		w.read_data_from_water_array_circle(grass_array);
 		
 		bitmap.draw_bitmap();
 			

@@ -8,7 +8,7 @@ public class Water extends all_in  {
 
 
     
-    void watering_point(int xc, int yc, int type, int rotation)
+    void watering_point(int xc, int yc, int type, int rotation, double bonus, ArrayList<Character> grass_array)
 {
 	int radius = 0;
 	
@@ -23,8 +23,10 @@ public class Water extends all_in  {
 			{
 				radius = final_scale * type_360_range;
 				if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2)){
-                                   int v = final_array.get(y * x_max * final_scale + x)+type_360_cycles;
+				if(grass_array.get((y / final_scale) * x_max + (x / final_scale))=='*'){
+                                   double v = final_array.get(y * x_max * final_scale + x)+type_360_cycles;
                                     final_array.set(y * x_max * final_scale + x, v);
+				}
                                     
                                 }
                                     
@@ -36,7 +38,7 @@ public class Water extends all_in  {
 				if (rotation == 1)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && (x <= xc || y >= yc)){
-                                            int v = final_array.get(y * x_max * final_scale + x)+type_270_cycles;
+                                            double v = final_array.get(y * x_max * final_scale + x)+type_270_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -44,7 +46,7 @@ public class Water extends all_in  {
 				else if (rotation == 2)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && (x <= xc || y <= yc)){
-                                            int v = final_array.get(y * x_max * final_scale + x)+type_270_cycles;
+                                            double v = final_array.get(y * x_max * final_scale + x)+type_270_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -52,7 +54,7 @@ public class Water extends all_in  {
 				else if (rotation == 3)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && (x >= xc || y <= yc)){
-                                           int v = final_array.get(y * x_max * final_scale + x)+type_270_cycles;
+                                           double v = final_array.get(y * x_max * final_scale + x)+type_270_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -60,7 +62,7 @@ public class Water extends all_in  {
 				else if (rotation == 4)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && (x >= xc || y >= yc)){
-                                             int v = final_array.get(y * x_max * final_scale + x)+type_270_cycles;
+                                             double v = final_array.get(y * x_max * final_scale + x)+type_270_cycles;
                                              final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -72,7 +74,7 @@ public class Water extends all_in  {
 				if (rotation == 1)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && x >= xc){
-                                            int v = final_array.get(y * x_max * final_scale + x)+type_180_cycles;
+                                            double v = final_array.get(y * x_max * final_scale + x)+type_180_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -80,7 +82,7 @@ public class Water extends all_in  {
 				else if (rotation == 2)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && y >= yc){
-                                            int v = final_array.get(y * x_max * final_scale + x)+type_180_cycles;
+                                            double v = final_array.get(y * x_max * final_scale + x)+type_180_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -88,7 +90,7 @@ public class Water extends all_in  {
 				else if (rotation == 3)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && x <= xc){
-                                            int v = final_array.get(y * x_max * final_scale + x)+type_180_cycles;
+                                            double v = final_array.get(y * x_max * final_scale + x)+type_180_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                             
                                         }
@@ -97,7 +99,7 @@ public class Water extends all_in  {
 				else if (rotation == 4)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && y <= yc){
-                                            int v = final_array.get(y * x_max * final_scale + x)+type_180_cycles;
+                                            double v = final_array.get(y * x_max * final_scale + x)+type_180_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -109,7 +111,7 @@ public class Water extends all_in  {
 				if (rotation == 1)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && y <= yc && x >= xc){
-                                           int v = final_array.get(y * x_max * final_scale + x)+type_90_cycles;
+                                           double v = final_array.get(y * x_max * final_scale + x)+type_90_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -117,7 +119,7 @@ public class Water extends all_in  {
 				else if (rotation == 2)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && y >= yc && x >= xc){
-                                           int v = final_array.get(y * x_max * final_scale + x)+type_90_cycles;
+                                           double v = final_array.get(y * x_max * final_scale + x)+type_90_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -125,7 +127,7 @@ public class Water extends all_in  {
 				else if (rotation == 3)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && y >= yc && x <= xc){
-                                           int v = final_array.get(y * x_max * final_scale + x)+type_90_cycles;
+                                           double v = final_array.get(y * x_max * final_scale + x)+type_90_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -133,7 +135,7 @@ public class Water extends all_in  {
 				else if (rotation == 4)
 				{
 					if (Math.pow(xc - x, 2) + Math.pow(yc - y, 2) <= Math.pow(radius, 2) && y <= yc && x <= xc){
-                                            int v = final_array.get(y * x_max * final_scale + x)+type_90_cycles;
+                                            double v = final_array.get(y * x_max * final_scale + x)+type_90_cycles;
                                             final_array.set(y * x_max * final_scale + x, v);
                                         }
 						
@@ -143,7 +145,7 @@ public class Water extends all_in  {
 	}
 }
 
-void read_data_from_water_array()
+void read_data_from_water_array(ArrayList<Character> grass_array)
 {
 	
 
@@ -153,14 +155,14 @@ void read_data_from_water_array()
 			if ( water_array.get(i).getUse()== 1)
 			{
 				
-				watering_point(water_array.get(i).getX(), water_array.get(i).getY(), water_array.get(i).getType(), water_array.get(i).getRotation());
+				watering_point(water_array.get(i).getX(), water_array.get(i).getY(), water_array.get(i).getType(), water_array.get(i).getRotation(),water_array.get(i).getBonus(), grass_array);
 			}
 		
 	}
 
 }
 
-public void read_data_from_water_array_circle()
+public void read_data_from_water_array_circle(ArrayList<Character> grass_array)
 {
 
 	for (int i = 0; i < water_array.size(); i++)
@@ -169,7 +171,7 @@ public void read_data_from_water_array_circle()
 			if ( water_array.get(i).getUse()== 2)
 			{
 				
-				watering_point(water_array.get(i).getX(), water_array.get(i).getY(), water_array.get(i).getType(), water_array.get(i).getRotation());
+				watering_point(water_array.get(i).getX(), water_array.get(i).getY(), water_array.get(i).getType(), water_array.get(i).getRotation(),water_array.get(i).getBonus(), grass_array);
 			}
 		
 

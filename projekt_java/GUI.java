@@ -87,7 +87,7 @@ public class GUI{
 		BitmapLabel.setBounds(0, 0, 800, 400);
 		panel.add(BitmapLabel);
 		
-		JLabel CorrectShapeLabel = new JLabel("Wprowadz kszta³t trawnika");
+		JLabel CorrectShapeLabel = new JLabel("Wprowadz ksztalt trawnika");
 		CorrectShapeLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		CorrectShapeLabel.setBounds(10, 101, 180, 14);
 		frame.getContentPane().add(CorrectShapeLabel);
@@ -135,7 +135,7 @@ public class GUI{
 		EndLabel.setBounds(10, 374, 180, 14);
 		frame.getContentPane().add(EndLabel);
 		
-		JLabel CycleTimeLabel_1 = new JLabel("Wprowadz iloœæ cykli:");
+		JLabel CycleTimeLabel_1 = new JLabel("Wprowadz ilosc cykli:");
 		CycleTimeLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		CycleTimeLabel_1.setBounds(10, 196, 180, 14);
 		frame.getContentPane().add(CycleTimeLabel_1);
@@ -146,7 +146,7 @@ public class GUI{
 		textField.setBounds(10, 218, 180, 20);
 		frame.getContentPane().add(textField);
 		
-		JButton shapeButton = new JButton("Kszta³t z pliku");
+		JButton shapeButton = new JButton("Ksztalt z pliku");
 		shapeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				

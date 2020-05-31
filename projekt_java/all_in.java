@@ -19,8 +19,9 @@ public class all_in  {
     protected static final int type_180_cycles = 3;
     protected static final int type_90_cycles = 4;
 
+    static int reflection; //0 bez odbicia, 1 z odbiciem
     static List <Water_sprinkler> water_array= new ArrayList<>();
-    static ArrayList<Integer> final_array = new ArrayList<>();
+    static ArrayList<Double> final_array = new ArrayList<>();
 	
     
 }
