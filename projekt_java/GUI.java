@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,10 +92,6 @@ public class GUI{
 		CorrectShapeLabel.setBounds(10, 101, 180, 14);
 		frame.getContentPane().add(CorrectShapeLabel);
 		
-		JButton GuiShapeButton = new JButton("Kszta\u0142t z GUI");
-		GuiShapeButton.setBounds(10, 67, 180, 23);
-		frame.getContentPane().add(GuiShapeButton);
-		
 		JRadioButton ReflectionRadioButton = new JRadioButton("Odbicia");
 		ReflectionRadioButton.setBackground(SystemColor.activeCaption);
 		ReflectionRadioButton.setForeground(Color.BLACK);
@@ -118,6 +115,16 @@ public class GUI{
 		frame.getContentPane().add(StopButton);
 		
 		JButton ClearButton = new JButton("Wyczy\u015B\u0107");
+		ClearButton.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				bitmap.clear_bitmap();
+				all_in.final_array.clear();
+				all_in.water_array.clear();
+				bitmap.average = 0.0;
+				bitmap.sum = 0.0;
+				bitmap.counter = 0.0;
+				}
+			});
 		ClearButton.setBounds(10, 326, 180, 23);
 		frame.getContentPane().add(ClearButton);
 		
@@ -139,8 +146,8 @@ public class GUI{
 		textField.setBounds(10, 218, 180, 20);
 		frame.getContentPane().add(textField);
 		
-		JButton btnNewButton = new JButton("Kszta³t z pliku");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton shapeButton = new JButton("Kszta³t z pliku");
+		shapeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				
 				System.out.println("xd");
@@ -168,8 +175,8 @@ public class GUI{
 				
 		
 		});
-		btnNewButton.setBounds(10, 33, 180, 23);
-		frame.getContentPane().add(btnNewButton);
+		shapeButton.setBounds(10, 33, 180, 23);
+		frame.getContentPane().add(shapeButton);
 		
 		JButton StartButton = new JButton("Start");
 		StartButton.addActionListener(new ActionListener() {
@@ -191,5 +198,9 @@ public class GUI{
 			});
 		StartButton.setBounds(10, 261, 180, 23);
 		frame.getContentPane().add(StartButton);
+		
+		JButton SaveButton = new JButton("Zapisz bitmap\u0119");
+		SaveButton.setBounds(10, 67, 180, 23);
+		frame.getContentPane().add(SaveButton);
 	}
 }
