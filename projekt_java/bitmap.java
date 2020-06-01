@@ -9,7 +9,7 @@ public class bitmap extends all_in {
 	static private int r = 0;
 	static private int g = 0;
 	static private int b = 0;
-	static private double data = 0.0;
+	static private double data = 0;
 	static int width = x_max * final_scale;
 	static int height = y_max * final_scale;
 	static double average = 0.0;
@@ -38,10 +38,13 @@ public class bitmap extends all_in {
 		}
 	average = sum/counter;
 	average = Math.round(average);
+	
+	/* Tests
 	System.out.println("srednia" + average);
 	System.out.println("ilosc " + counter);
 	System.out.println("suma " + sum);
-
+	System.out.println("cykle " + cycles);
+	*/
 		
 		for (int i = 0; i < y_max * final_scale; i++) {
 			for (int j = 0; j < x_max * final_scale; j++) {
@@ -54,21 +57,26 @@ public class bitmap extends all_in {
 					b = 0;
 				}else if (data < 0) {
 					r = 0;
-					g = (int) (255.0 - (Math.abs(data) / 10.0 * 255.0));
+					g = (int) (255.0 - (Math.abs(data) / (Math.pow((double)cycles, 1.3) * 20.0) * 255.0));
 					b = 0;
 				} else if (data == 0) {
 					r = 0;
 					g = 255;
 					b = 0;
 
-				} else if (data > 0 && data <= 20)  {
-					r = (int) ((data / 20.0) * 255.0);
-					g = (int) (255.0 - (data / 20.0 * 255.0));
+				} else if (data > 0 && data <= cycles * 100.0)  {
+					r = (int) (data / (cycles * 100.0) * 255.0);
+					g = (int) (255.0 - (data / (cycles * 100.0) * 255.0));
 					b = 0;
-				} else {
-					r = 0;
+				} else if(data > cycles * 100){
+					r = 125;
 					g = 0;
-					b = 255;
+					b = (int) (data / (cycles * 1000.0) * 255.0);
+					if(r > 255 || g > 255 || b > 255) {
+						r = 0;
+						g = 0;
+						b = 255;
+					}
 				}
 				
 				Color myColor = new Color(r, g, b);

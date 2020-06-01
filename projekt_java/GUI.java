@@ -9,6 +9,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import javax.swing.JRadioButton;
@@ -87,7 +88,7 @@ public class GUI{
 		BitmapLabel.setBounds(0, 0, 800, 400);
 		panel.add(BitmapLabel);
 		
-		JLabel CorrectShapeLabel = new JLabel("Wprowadz ksztalt trawnika");
+		JLabel CorrectShapeLabel = new JLabel("Wprowadz kszta³t trawnika");
 		CorrectShapeLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		CorrectShapeLabel.setBounds(10, 101, 180, 14);
 		frame.getContentPane().add(CorrectShapeLabel);
@@ -95,7 +96,7 @@ public class GUI{
 		JRadioButton ReflectionRadioButton = new JRadioButton("Odbicia");
 		ReflectionRadioButton.setBackground(SystemColor.activeCaption);
 		ReflectionRadioButton.setForeground(Color.BLACK);
-		ReflectionRadioButton.setSelected(true);
+		ReflectionRadioButton.setSelected(false);
 		ReflectionRadioButton.setBounds(10, 122, 109, 23);
 		frame.getContentPane().add(ReflectionRadioButton);
 		
@@ -105,7 +106,7 @@ public class GUI{
 		frame.getContentPane().add(CycleTimeLabel);
 		
 		textField_1 = new JTextField();
-		textField_1.setText("0.1");
+		textField_1.setText("1.0");
 		textField_1.setBounds(10, 170, 180, 20);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
@@ -135,7 +136,7 @@ public class GUI{
 		EndLabel.setBounds(10, 374, 180, 14);
 		frame.getContentPane().add(EndLabel);
 		
-		JLabel CycleTimeLabel_1 = new JLabel("Wprowadz ilosc cykli:");
+		JLabel CycleTimeLabel_1 = new JLabel("Wprowadz iloœæ cykli:");
 		CycleTimeLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		CycleTimeLabel_1.setBounds(10, 196, 180, 14);
 		frame.getContentPane().add(CycleTimeLabel_1);
@@ -146,17 +147,13 @@ public class GUI{
 		textField.setBounds(10, 218, 180, 20);
 		frame.getContentPane().add(textField);
 		
-		JButton shapeButton = new JButton("Ksztalt z pliku");
+		JButton shapeButton = new JButton("Kszta³t z pliku");
 		shapeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				
-				System.out.println("xd");
-				
-				 System.out.println("Open");
-			        //openSuccess.setText("  ");
+			
 			        JFileChooser chooseFile = new JFileChooser();
-			        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt"); //dodajesz tutaj rozszrzezenie ktore chcesz by wyszukiwal
-			        chooseFile.setAcceptAllFileFilterUsed(false); //wylacz by byly wsystkie pliki widoczne
+			        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt"); 
+			        chooseFile.setAcceptAllFileFilterUsed(false); 
 			        chooseFile.setFileFilter(filter);
 			        int result = chooseFile.showOpenDialog(frame);
 			        if (result == JFileChooser.APPROVE_OPTION) {
@@ -181,10 +178,23 @@ public class GUI{
 		JButton StartButton = new JButton("Start");
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				all_in.cycles = Integer.parseInt(textField.getText());
+				all_in.time = Double.parseDouble(textField_1.getText());
+				
+				if(ReflectionRadioButton.isSelected())
+				{
+					all_in.reflection = 1;
+				}else {
+					all_in.reflection = 0;
+				}
 				
 				try {
 					if(Trawnik.filename != null) {
-					Trawnik grass = new Trawnik();
+					for(int i = 0; i < all_in.cycles; i++ ) {
+						Trawnik grass = new Trawnik();
+						bitmap.draw_bitmap();
+					}
+					
 					}
 					else {
 						CorrectShapeLabel.setForeground(Color.RED);
