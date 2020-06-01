@@ -1,7 +1,6 @@
 package trawnik;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Setup extends all_in {
 

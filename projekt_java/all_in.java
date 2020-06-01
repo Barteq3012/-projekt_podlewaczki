@@ -8,7 +8,7 @@ public class all_in  {
     protected static final  int y_max = 40;
     protected static final int final_scale = 10;
     protected static int cycles  = 10;
-    protected static double time  = 1.0;
+    protected static int time  = 0;
     static int reflection = 0; //0 bez odbicia, 1 z odbiciem
      
     protected static final int type_360_range = 2;

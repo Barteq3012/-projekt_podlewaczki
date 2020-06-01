@@ -3,7 +3,6 @@ package trawnik;
 import java.io.IOException;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 public class sprinkler_file extends all_in {
 

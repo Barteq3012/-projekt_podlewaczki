@@ -4,38 +4,30 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import javax.swing.JRadioButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class GUI{
+public class GUI {
 
 	public static JFrame frame;
 	public static JLabel BitmapLabel;
 	private JTextField textField_1;
 	private JTextField textField;
+	private int is_end = 0;
+	//private boolean flag = false;  
 
 	/**
 	 * Launch the application.
@@ -46,10 +38,9 @@ public class GUI{
 				try {
 					GUI window = new GUI();
 					window.frame.setVisible(true);
-					
-					
-					//bitmap.draw_bitmap();
-					//Trawnik grass = new Trawnik();
+
+					// bitmap.draw_bitmap();
+					// Trawnik grass = new Trawnik();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -74,47 +65,43 @@ public class GUI{
 		frame.setBounds(100, 100, 1020, 443);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(new Color(0, 0, 0));
 		panel.setBounds(200, 0, 800, 400);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
-		
+
 		BitmapLabel = new JLabel("");
 		BitmapLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		BitmapLabel.setForeground(Color.WHITE);
 		BitmapLabel.setBounds(0, 0, 800, 400);
 		panel.add(BitmapLabel);
-		
+
 		JLabel CorrectShapeLabel = new JLabel("Wprowadz kszta³t trawnika");
 		CorrectShapeLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		CorrectShapeLabel.setBounds(10, 101, 180, 14);
+		CorrectShapeLabel.setBounds(10, 11, 180, 14);
 		frame.getContentPane().add(CorrectShapeLabel);
-		
+
 		JRadioButton ReflectionRadioButton = new JRadioButton("Odbicia");
 		ReflectionRadioButton.setBackground(SystemColor.activeCaption);
 		ReflectionRadioButton.setForeground(Color.BLACK);
 		ReflectionRadioButton.setSelected(false);
-		ReflectionRadioButton.setBounds(10, 122, 109, 23);
+		ReflectionRadioButton.setBounds(6, 111, 109, 23);
 		frame.getContentPane().add(ReflectionRadioButton);
-		
-		JLabel CycleTimeLabel = new JLabel("Wprowadz czas cyklu:");
+
+		JLabel CycleTimeLabel = new JLabel("Wprowadz czas cyklu(ms):");
 		CycleTimeLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		CycleTimeLabel.setBounds(10, 148, 180, 14);
 		frame.getContentPane().add(CycleTimeLabel);
-		
+
 		textField_1 = new JTextField();
-		textField_1.setText("1.0");
+		textField_1.setText("100");
 		textField_1.setBounds(10, 170, 180, 20);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
-		
-		JButton StopButton = new JButton("Stop");
-		StopButton.setBounds(10, 295, 180, 23);
-		frame.getContentPane().add(StopButton);
-		
+
 		JButton ClearButton = new JButton("Wyczy\u015B\u0107");
 		ClearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -124,93 +111,130 @@ public class GUI{
 				bitmap.average = 0.0;
 				bitmap.sum = 0.0;
 				bitmap.counter = 0.0;
-				}
-			});
-		ClearButton.setBounds(10, 326, 180, 23);
+				is_end = 0;
+				
+			}
+		});
+		ClearButton.setBounds(10, 304, 180, 32);
 		frame.getContentPane().add(ClearButton);
-		
+
 		JLabel EndLabel = new JLabel("Koniec!");
 		EndLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		EndLabel.setFont(new Font("Arial", Font.BOLD, 18));
 		EndLabel.setForeground(SystemColor.text);
 		EndLabel.setBounds(10, 374, 180, 14);
 		frame.getContentPane().add(EndLabel);
+		EndLabel.setVisible(false);
 		
+		JLabel saveLabel = new JLabel("Zapisano wsp\u00F3\u0142rz\u0119dne");
+		saveLabel.setBounds(10, 349, 180, 14);
+		frame.getContentPane().add(saveLabel);
+		saveLabel.setVisible(false);
+
 		JLabel CycleTimeLabel_1 = new JLabel("Wprowadz iloœæ cykli:");
 		CycleTimeLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		CycleTimeLabel_1.setBounds(10, 196, 180, 14);
 		frame.getContentPane().add(CycleTimeLabel_1);
-		
+
 		textField = new JTextField();
 		textField.setText("1");
 		textField.setColumns(10);
 		textField.setBounds(10, 218, 180, 20);
 		frame.getContentPane().add(textField);
-		
+
 		JButton shapeButton = new JButton("Kszta³t z pliku");
 		shapeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-			
-			        JFileChooser chooseFile = new JFileChooser();
-			        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt"); 
-			        chooseFile.setAcceptAllFileFilterUsed(false); 
-			        chooseFile.setFileFilter(filter);
-			        int result = chooseFile.showOpenDialog(frame);
-			        if (result == JFileChooser.APPROVE_OPTION) {
-			
-			        	File file = chooseFile.getSelectedFile();
-			            Trawnik.filename = file.getAbsolutePath();
-			          
-			        }
 
-			  
-			       else if (result == JFileChooser.CANCEL_OPTION) {
-			            System.out.println("Cancel was selected");
-			        }
+				JFileChooser chooseFile = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
+				chooseFile.setAcceptAllFileFilterUsed(false);
+				chooseFile.setFileFilter(filter);
+				int result = chooseFile.showOpenDialog(frame);
+				if (result == JFileChooser.APPROVE_OPTION) {
 
-			}                                      
-				
-		
+					File file = chooseFile.getSelectedFile();
+					Trawnik.filename = file.getAbsolutePath();
+
+				}
+
+				else if (result == JFileChooser.CANCEL_OPTION) {
+					System.out.println("Cancel was selected");
+				}
+
+			}
+
 		});
-		shapeButton.setBounds(10, 33, 180, 23);
+		shapeButton.setBounds(10, 36, 180, 23);
 		frame.getContentPane().add(shapeButton);
-		
+
 		JButton StartButton = new JButton("Start");
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				all_in.cycles = Integer.parseInt(textField.getText());
-				all_in.time = Double.parseDouble(textField_1.getText());
-				
-				if(ReflectionRadioButton.isSelected())
-				{
+				all_in.time = Integer.parseInt(textField_1.getText());
+
+				if (ReflectionRadioButton.isSelected()) {
 					all_in.reflection = 1;
-				}else {
+				} else {
 					all_in.reflection = 0;
 				}
-				
-				try {
-					if(Trawnik.filename != null) {
-					for(int i = 0; i < all_in.cycles; i++ ) {
-						Trawnik grass = new Trawnik();
-						bitmap.draw_bitmap();
-					}
+
+				if (Trawnik.filename != null) {
+					Thread myThread = new Thread(() -> {
+						for (int i = 0; i < all_in.cycles; i++) {
+							try {
+								Trawnik grass = new Trawnik();
+								is_end++;
+								if (is_end == all_in.cycles) {
+									EndLabel.setVisible(true);
+									saveLabel.setVisible(true);
+								}else {
+									EndLabel.setVisible(false);
+									saveLabel.setVisible(false);
+								}
+							} catch (FileNotFoundException e2) {
+								e2.printStackTrace();
+							}
+							try {
+								Thread.sleep(all_in.time);
+							} catch (InterruptedException e1) {
+								e1.printStackTrace();
+							}
+						}
+
+					});
+
+					myThread.start();
 					
-					}
-					else {
-						CorrectShapeLabel.setForeground(Color.RED);
-						CorrectShapeLabel.setText("Najpierw wprowadz plik!");
-					}
-				} catch (FileNotFoundException e1) {
+
+				} else {
+					CorrectShapeLabel.setForeground(Color.RED);
+					CorrectShapeLabel.setText("Najpierw wprowadz plik!");
+				}
+
+			}
+		});
+		StartButton.setBounds(10, 261, 180, 32);
+		frame.getContentPane().add(StartButton);
+
+		JButton SaveButton = new JButton("Zapisz bitmap\u0119");
+		SaveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				
+			    File outputfile = new File("saved_bitmap.png");
+			    try {
+					ImageIO.write(bitmap.image, "png", outputfile);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
-				}
-			});
-		StartButton.setBounds(10, 261, 180, 23);
-		frame.getContentPane().add(StartButton);
-		
-		JButton SaveButton = new JButton("Zapisz bitmap\u0119");
-		SaveButton.setBounds(10, 67, 180, 23);
+			}
+		});
+		SaveButton.setBounds(10, 70, 180, 23);
 		frame.getContentPane().add(SaveButton);
+		
+		
 	}
 }
