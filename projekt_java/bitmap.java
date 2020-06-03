@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
-public class bitmap extends all_in {
+public class Bitmap extends All_in {
 	static private int r = 0;
 	static private int g = 0;
 	static private int b = 0;
@@ -87,7 +87,7 @@ public class bitmap extends all_in {
 
 		}
 
-		bitmap.display(image);
+		Bitmap.display(image);
 
 	}
 	
@@ -103,7 +103,7 @@ public class bitmap extends all_in {
 
 		}
 
-		bitmap.display(image);
+		Bitmap.display(image);
 
 	}
 

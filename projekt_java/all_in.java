@@ -3,7 +3,7 @@ package trawnik;
 import java.util.ArrayList;
 import java.util.List;
 
-public class all_in  {
+public class All_in  {
     protected static final int x_max = 80;
     protected static final  int y_max = 40;
     protected static final int final_scale = 10;

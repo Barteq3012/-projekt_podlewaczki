@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import java.io.PrintWriter;
 
-public class sprinkler_file extends all_in {
+public class Sprinkler_file extends All_in {
 
     public void sprinklerFile() {
 		

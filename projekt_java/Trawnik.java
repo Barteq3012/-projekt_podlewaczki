@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
 
-public class Trawnik extends all_in  {
+public class Trawnik extends All_in  {
 
 	protected static String filename;
 
@@ -64,7 +64,7 @@ public class Trawnik extends all_in  {
 		*/
 		Setup s = new Setup();
 		Water w = new Water();
-		sprinkler_file file =new sprinkler_file();
+		Sprinkler_file file =new Sprinkler_file();
 		s.setup_algorytm(grass_array);
 		
 		//System.out.println("Rozmiar water_array pierwsze wywolanie");
@@ -76,7 +76,7 @@ public class Trawnik extends all_in  {
 		w.read_data_from_water_array_circle(grass_array);
 		file.sprinklerFile();
 
-		bitmap.draw_bitmap();
+		Bitmap.draw_bitmap();
 			
 
 	

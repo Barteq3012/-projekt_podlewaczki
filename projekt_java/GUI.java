@@ -105,12 +105,12 @@ public class GUI {
 		JButton ClearButton = new JButton("Wyczy\u015B\u0107");
 		ClearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				bitmap.clear_bitmap();
-				all_in.final_array.clear();
-				all_in.water_array.clear();
-				bitmap.average = 0.0;
-				bitmap.sum = 0.0;
-				bitmap.counter = 0.0;
+				Bitmap.clear_bitmap();
+				All_in.final_array.clear();
+				All_in.water_array.clear();
+				Bitmap.average = 0.0;
+				Bitmap.sum = 0.0;
+				Bitmap.counter = 0.0;
 				is_end = 0;
 				
 			}
@@ -171,22 +171,22 @@ public class GUI {
 		JButton StartButton = new JButton("Start");
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				all_in.cycles = Integer.parseInt(textField.getText());
-				all_in.time = Integer.parseInt(textField_1.getText());
+				All_in.cycles = Integer.parseInt(textField.getText());
+				All_in.time = Integer.parseInt(textField_1.getText());
 
 				if (ReflectionRadioButton.isSelected()) {
-					all_in.reflection = 1;
+					All_in.reflection = 1;
 				} else {
-					all_in.reflection = 0;
+					All_in.reflection = 0;
 				}
 
 				if (Trawnik.filename != null) {
 					Thread myThread = new Thread(() -> {
-						for (int i = 0; i < all_in.cycles; i++) {
+						for (int i = 0; i < All_in.cycles; i++) {
 							try {
 								Trawnik grass = new Trawnik();
 								is_end++;
-								if (is_end == all_in.cycles) {
+								if (is_end == All_in.cycles) {
 									EndLabel.setVisible(true);
 									saveLabel.setVisible(true);
 								}else {
@@ -197,7 +197,7 @@ public class GUI {
 								e2.printStackTrace();
 							}
 							try {
-								Thread.sleep(all_in.time);
+								Thread.sleep(All_in.time);
 							} catch (InterruptedException e1) {
 								e1.printStackTrace();
 							}
@@ -224,7 +224,7 @@ public class GUI {
 				
 			    File outputfile = new File("saved_bitmap.png");
 			    try {
-					ImageIO.write(bitmap.image, "png", outputfile);
+					ImageIO.write(Bitmap.image, "png", outputfile);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -2,7 +2,7 @@ package trawnik;
 
 import java.util.ArrayList;
 
-public class Water extends all_in  {    
+public class Water extends All_in  {    
 
 
 

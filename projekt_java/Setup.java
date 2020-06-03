@@ -2,7 +2,7 @@ package trawnik;
 
 import java.util.ArrayList;
 
-public class Setup extends all_in {
+public class Setup extends All_in {
 
 private int watering_condition(int circle_x, int circle_y, int type, int rotation, ArrayList<Character> grass_array)
 {
