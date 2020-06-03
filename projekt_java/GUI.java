@@ -26,8 +26,7 @@ public class GUI {
 	public static JLabel BitmapLabel;
 	private JTextField textField_1;
 	private JTextField textField;
-	private int is_end = 0;
-	//private boolean flag = false;  
+	private int is_end = 0; 
 
 	/**
 	 * Launch the application.
@@ -39,8 +38,6 @@ public class GUI {
 					GUI window = new GUI();
 					window.frame.setVisible(true);
 
-					// bitmap.draw_bitmap();
-					// Trawnik grass = new Trawnik();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -226,7 +223,7 @@ public class GUI {
 			    try {
 					ImageIO.write(Bitmap.image, "png", outputfile);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 				

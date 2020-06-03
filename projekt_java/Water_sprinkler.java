@@ -8,7 +8,7 @@ public class Water_sprinkler  {
 	int type; // typ podlewaczki
         int rotation; // obrot poszczegolnej podlewczki
         int use; //zeby dana podlewaczka dziala tylko raz 
-	double bonus;
+	double bonus; //decyduje czy z odbiciem
 	
     public int getX()
         {

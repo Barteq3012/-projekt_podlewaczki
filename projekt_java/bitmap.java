@@ -38,13 +38,6 @@ public class Bitmap extends All_in {
 		}
 	average = sum/counter;
 	average = Math.round(average);
-	
-	/* Tests
-	System.out.println("srednia" + average);
-	System.out.println("ilosc " + counter);
-	System.out.println("suma " + sum);
-	System.out.println("cykle " + cycles);
-	*/
 		
 		for (int i = 0; i < y_max * final_scale; i++) {
 			for (int j = 0; j < x_max * final_scale; j++) {

@@ -3,9 +3,6 @@ package trawnik;
 import java.util.ArrayList;
 
 public class Water extends All_in  {    
-
-
-
     
     void watering_point(int xc, int yc, int type, int rotation, double bonus, ArrayList<Character> grass_array)
 {
